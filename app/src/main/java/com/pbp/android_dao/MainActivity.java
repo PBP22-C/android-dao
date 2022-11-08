@@ -31,30 +31,30 @@ public class MainActivity extends AppCompatActivity {
 
         // Get all views
         spinner = (Spinner) findViewById(R.id.spinnerGedung);
-        insertGedungButton = findViewById(R.id.insertGedungButton);
+//        insertGedungButton = findViewById(R.id.insertGedungButton);
 
         // Get database
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "Buku").build();
 
         loadGedungToSpinner();
 
-        insertGedungButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EditText kodeGedungView = findViewById(R.id.kodeGedung);
-                EditText namaGedungView = findViewById(R.id.namaGedung);
-
-                AsyncTask.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent = new Intent(view.getContext(), MainActivity.class);
-                        startActivityForResult(intent,0);
-//                        db.gedungDAO().insertOne(new Gedung("SLKF", "Hahahihi"));
-//                        db.gedungDAO().insertOne(new Gedung(kodeGedungView.getText().toString(), namaGedungView.getText().toString()));
-                    }
-                });
-            }
-        });
+//        insertGedungButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                EditText kodeGedungView = findViewById(R.id.kodeGedung);
+////                EditText namaGedungView = findViewById(R.id.namaGedung);
+//
+//                AsyncTask.execute(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Intent intent = new Intent(view.getContext(), MainActivity.class);
+//                        startActivityForResult(intent,0);
+////                        db.gedungDAO().insertOne(new Gedung("SLKF", "Hahahihi"));
+////                        db.gedungDAO().insertOne(new Gedung(kodeGedungView.getText().toString(), namaGedungView.getText().toString()));
+//                    }
+//                });
+//            }
+//        });
     }
 
     @Override
