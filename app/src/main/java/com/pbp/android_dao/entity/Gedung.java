@@ -1,22 +1,24 @@
 package com.pbp.android_dao.entity;
 
+import androidx.annotation.NonNull;
+import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
+import androidx.room.Relation;
 
 import java.util.List;
 
 @Entity
 public class Gedung {
-
     @PrimaryKey
+    @NonNull
     private String kodeGedung;
     private String nama;
-    private List<Ruangan> ruangan;
 
-    public Gedung(String kodeGedung, String nama, List<Ruangan> ruangan) {
+    public Gedung(String kodeGedung, String nama) {
         this.kodeGedung = kodeGedung;
         this.nama = nama;
-        this.ruangan = ruangan;
     }
 
     public String getKodeGedung() {
@@ -35,11 +37,8 @@ public class Gedung {
         this.nama = nama;
     }
 
-    public List<Ruangan> getRuangan() {
-        return ruangan;
-    }
-
-    public void addRuangan(Ruangan ruangan) {
-        this.ruangan.add(ruangan);
+    @Override
+    public String toString() {
+        return nama;
     }
 }

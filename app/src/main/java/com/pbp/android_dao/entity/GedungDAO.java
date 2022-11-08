@@ -21,6 +21,9 @@ public interface GedungDAO {
     @Insert
     void insertAll(Gedung... gedungs);
 
+    @Insert
+    void insertOne(Gedung gedung);
+
     @Delete
     void delete(Gedung gedung);
 }
