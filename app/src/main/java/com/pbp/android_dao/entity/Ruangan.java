@@ -8,11 +8,13 @@ public class Ruangan {
     @PrimaryKey
     private String kode_ruangan;
     private String nama;
+    private int kapasitas;
     private Gedung gedung;
 
-    public Ruangan(int id, String nama, String lokasi) {
+    public Ruangan(String kode_ruangan, String nama, int kapasitas, Gedung gedung) {
         this.kode_ruangan = kode_ruangan;
         this.nama = nama;
+        this.kapasitas = kapasitas;
         this.gedung = gedung;
     }
 
@@ -30,6 +32,14 @@ public class Ruangan {
 
     public void setNama(String nama) {
         this.nama = nama;
+    }
+
+    public int getKapasitas() {
+        return kapasitas;
+    }
+
+    public void setKapasitas(int kapasitas) {
+        this.kapasitas = kapasitas;
     }
 
     public Gedung getGedung() {
