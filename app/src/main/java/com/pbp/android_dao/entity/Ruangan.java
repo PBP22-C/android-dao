@@ -6,24 +6,24 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Ruangan {
     @PrimaryKey
-    private String kode_ruangan;
+    private String kodeRuangan;
     private String nama;
     private int kapasitas;
     private Gedung gedung;
 
-    public Ruangan(String kode_ruangan, String nama, int kapasitas, Gedung gedung) {
-        this.kode_ruangan = kode_ruangan;
+    public Ruangan(String kodeRuangan, String nama, int kapasitas, Gedung gedung) {
+        this.kodeRuangan = kodeRuangan;
         this.nama = nama;
         this.kapasitas = kapasitas;
         this.gedung = gedung;
     }
 
-    public String getKode_ruangan() {
-        return kode_ruangan;
+    public String getKodeRuangan() {
+        return kodeRuangan;
     }
 
-    public void setKode_ruangan(String id) {
-        this.kode_ruangan = id;
+    public void setKodeRuangan(String id) {
+        this.kodeRuangan = id;
     }
 
     public String getNama() {

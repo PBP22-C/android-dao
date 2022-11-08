@@ -9,22 +9,22 @@ import java.util.List;
 public class Gedung {
 
     @PrimaryKey
-    private String kode_gedung;
+    private String kodeGedung;
     private String nama;
     private List<Ruangan> ruangan;
 
     public Gedung(String kode_gedung, String nama, List<Ruangan> ruangan) {
-        this.kode_gedung = kode_gedung;
+        this.kodeGedung = kode_gedung;
         this.nama = nama;
         this.ruangan = ruangan;
     }
 
-    public String getKode_gedung() {
-        return kode_gedung;
+    public String getKodeGedung() {
+        return kodeGedung;
     }
 
-    public void setKode_gedung(String kode_gedung) {
-        this.kode_gedung = kode_gedung;
+    public void setKodeGedung(String kodeGedung) {
+        this.kodeGedung = kodeGedung;
     }
 
     public String getNama() {
