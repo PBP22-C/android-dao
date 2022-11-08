@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    Button insertGedungButton;
+//    Button insertGedungButton;
     Spinner spinner;
     AppDatabase db;
 
@@ -31,30 +31,30 @@ public class MainActivity extends AppCompatActivity {
 
         // Get all views
         spinner = (Spinner) findViewById(R.id.spinnerGedung);
-        insertGedungButton = findViewById(R.id.insertGedungButton);
+//        insertGedungButton = findViewById(R.id.insertGedungButton);
 
         // Get database
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "Buku").build();
 
         loadGedungToSpinner();
 
-        insertGedungButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EditText kodeGedungView = findViewById(R.id.kodeGedung);
-                EditText namaGedungView = findViewById(R.id.namaGedung);
-
-                AsyncTask.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent = new Intent(view.getContext(), MainActivity.class);
-                        startActivityForResult(intent,0);
+//        insertGedungButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                EditText kodeGedungView = findViewById(R.id.kodeGedung);
+//                EditText namaGedungView = findViewById(R.id.namaGedung);
+//
+//                AsyncTask.execute(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Intent intent = new Intent(view.getContext(), MainActivity.class);
+//                        startActivityForResult(intent,0);
 //                        db.gedungDAO().insertOne(new Gedung("SLKF", "Hahahihi"));
 //                        db.gedungDAO().insertOne(new Gedung(kodeGedungView.getText().toString(), namaGedungView.getText().toString()));
-                    }
-                });
-            }
-        });
+//                    }
+//                });
+//            }
+//        });
     }
 
     @Override
@@ -77,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 allGedung = db.gedungDAO().getAll();
                 allGedung.add(0, new Gedung("All", "Semua Gedung"));
+                allGedung.add(1, new Gedung("SLKF", "Hahahihi"));
+                allGedung.add(2, new Gedung("B","Matematika"));
+                allGedung.add(3, new Gedung("C","Fisika"));
                 // Create spinner with all available gedung
                 // Create an ArrayAdapter using the string array and a default spinner layout
                 ArrayAdapter<Gedung> adapter = new ArrayAdapter<Gedung>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, allGedung);
