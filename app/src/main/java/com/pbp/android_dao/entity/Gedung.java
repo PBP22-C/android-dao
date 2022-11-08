@@ -13,8 +13,8 @@ public class Gedung {
     private String nama;
     private List<Ruangan> ruangan;
 
-    public Gedung(String kode_gedung, String nama, List<Ruangan> ruangan) {
-        this.kodeGedung = kode_gedung;
+    public Gedung(String kodeGedung, String nama, List<Ruangan> ruangan) {
+        this.kodeGedung = kodeGedung;
         this.nama = nama;
         this.ruangan = ruangan;
     }
