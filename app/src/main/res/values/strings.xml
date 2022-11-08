@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">android-dao</string>
+    <string name="tambahGedung">Tambah Gedung</string>
+    <string name="tambahRuangan">Tambah Ruangan</string>
+    <string name="nama_gedung">Nama Gedung</string>
+    <string name="insert">Insert Gedung</string>
+    <string name="kode_gedung">Kode Gedung</string>
+    <string name="kode_ruang">Kode Ruang</string>
+    <string name="nama_ruang">Nama Ruang</string>
+    <string name="insert_ruang">Insert Ruang</string>
+    <string name="kapasitas">Kapasitas</string>
+    <string name="pilih_gedung">Pilih Gedung</string>
 </resources>
