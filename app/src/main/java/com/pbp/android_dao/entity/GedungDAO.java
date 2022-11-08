@@ -12,7 +12,7 @@ public interface GedungDAO {
     @Query("SELECT * FROM gedung")
     List<Gedung> getAll();
 
-    @Query("SELECT * FROM gedung WHERE kode_gedung IN (:gedungIds)")
+    @Query("SELECT * FROM gedung WHERE kodeGedung IN (:gedungIds)")
     List<Gedung> loadAllByIds(int[] gedungIds);
 
     @Query("SELECT * FROM gedung WHERE nama LIKE :nama LIMIT 1")
