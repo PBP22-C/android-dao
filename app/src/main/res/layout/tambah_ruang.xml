@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/namaRuang"
+        android:layout_width="319dp"
+        android:layout_height="47dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/nama_ruang"
+        tools:layout_editor_absoluteX="60dp"
+        tools:layout_editor_absoluteY="200dp" />
+
+    <Button
+        android:id="@+id/insertRuangButton"
+        android:layout_width="319dp"
+        android:layout_height="47dp"
+        android:text="@string/insert_ruang"
+        tools:layout_editor_absoluteX="60dp"
+        tools:layout_editor_absoluteY="257dp"
+        app:layout_constraintTop_toBottomOf="@+id/spinner"
+
+        />
+
+    <EditText
+        android:id="@+id/kodeRuang"
+        android:layout_width="317dp"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/kode_ruang"
+        tools:layout_editor_absoluteX="60dp"
+        tools:layout_editor_absoluteY="140dp" />
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/kapasitas"
+        android:text="@string/kapasitas"
+        android:ems="10"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="60dp"
+        app:layout_constraintTop_toBottomOf="@+id/namaRuang" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:entries="@array/gedung"
+        android:prompt="@string/pilih_gedung"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kapasitas" />
+
+    <Button
+        android:id="@+id/tambahGedung"
+        android:layout_width="153dp"
+        android:layout_height="55dp"
+        android:text="@string/tambahGedung"
+        tools:layout_editor_absoluteX="56dp"
+        tools:layout_editor_absoluteY="67dp" />
+
+    <Button
+        android:id="@+id/tambahRuangan"
+        android:layout_width="158dp"
+        android:layout_height="55dp"
+        android:text="@string/tambahRuangan"
+        tools:layout_editor_absoluteX="226dp"
+        tools:layout_editor_absoluteY="67dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

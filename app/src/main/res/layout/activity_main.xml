@@ -1,37 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="9dp"
+    android:text="Pilih Gedung"
+    android:textSize="20sp"
+    android:id="@+id/tv_pilihgedung"
+    android:textStyle="bold"
+    tools:layout_editor_absoluteX="36dp"
+    tools:layout_editor_absoluteY="25dp" />
+<Spinner
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toBottomOf="@+id/tv_pilihgedung"
+    android:id="@+id/spinner"
+    android:layout_marginTop="8dp"
+    android:entries="@array/gedung"
+    android:prompt="@string/pilih_gedung"
+    />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="9dp"
+    android:text="Daftar Ruang"
+    android:textSize="20sp"
+    android:id="@+id/tv_daftar_ruang"
+    android:textStyle="bold"
+    tools:layout_editor_absoluteX="36dp"
+    tools:layout_editor_absoluteY="25dp"
+    app:layout_constraintTop_toBottomOf="@+id/spinner"
+    />
+<ListView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/listView"
+    android:layout_marginTop="8dp"
+    app:layout_constraintTop_toBottomOf="@+id/tv_daftar_ruang"
 
-    <Button
-        android:id="@+id/insertGedungButton"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:text="Insert"
-        tools:layout_editor_absoluteX="56dp"
-        tools:layout_editor_absoluteY="183dp" />
+    />
 
-    <EditText
-        android:id="@+id/kodeGedung"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Kode Gedung"
-        tools:layout_editor_absoluteX="56dp"
-        tools:layout_editor_absoluteY="66dp" />
-
-    <EditText
-        android:id="@+id/namaGedung"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Nama Gedung"
-        tools:layout_editor_absoluteX="56dp"
-        tools:layout_editor_absoluteY="126dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
