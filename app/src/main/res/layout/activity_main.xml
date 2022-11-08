@@ -34,4 +34,11 @@
         tools:layout_editor_absoluteX="56dp"
         tools:layout_editor_absoluteY="126dp" />
 
+    <Spinner
+        android:id="@+id/spinnerGedung"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="15dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
