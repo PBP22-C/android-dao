@@ -3,10 +3,14 @@ package com.pbp.android_dao;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.room.Room;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Spinner;
+
+import com.pbp.android_dao.entity.AppDatabase;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +27,7 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+//    private Spinner spinner;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -49,10 +54,13 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+//        spinner = (Spinner) findViewById(R.id.spinnerGedung);
+////        insertGedungButton = findViewById(R.id.insertGedungButton);
+//
+//        // Get database
+//        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "Buku").build();
+//
+//        loadGedungToSpinner();
     }
 
     @Override
