@@ -13,6 +13,11 @@ public class Gedung {
     private String nama;
     private List<Ruangan> ruangan;
 
+    public Gedung(String kode_gedung, String nama) {
+        this.kodeGedung = kode_gedung;
+        this.nama = nama;
+    }
+
     public Gedung(String kode_gedung, String nama, List<Ruangan> ruangan) {
         this.kodeGedung = kode_gedung;
         this.nama = nama;

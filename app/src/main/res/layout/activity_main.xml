@@ -7,11 +7,31 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/insertButton"
+        android:id="@+id/insertGedungButton"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:text="Insert"
-        tools:layout_editor_absoluteX="167dp"
-        tools:layout_editor_absoluteY="319dp" />
+        tools:layout_editor_absoluteX="56dp"
+        tools:layout_editor_absoluteY="183dp" />
+
+    <EditText
+        android:id="@+id/kodeGedung"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Kode Gedung"
+        tools:layout_editor_absoluteX="56dp"
+        tools:layout_editor_absoluteY="66dp" />
+
+    <EditText
+        android:id="@+id/namaGedung"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Nama Gedung"
+        tools:layout_editor_absoluteX="56dp"
+        tools:layout_editor_absoluteY="126dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,12 +5,15 @@ import androidx.room.Room;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+
+import com.pbp.android_dao.entity.AppDatabase;
+import com.pbp.android_dao.entity.Gedung;
 
 public class MainActivity extends AppCompatActivity {
-    Button insertButton;
+    Button insertGedungButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,18 +23,18 @@ public class MainActivity extends AppCompatActivity {
         // Get database
         AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "Buku").build();
 
-        insertButton = findViewById(R.id.insertButton);
-        deleteButton = findViewById(R.id.deleteButton);
-        updateButton = findViewById(R.id.updateButton);
+        insertGedungButton = findViewById(R.id.insertGedungButton);
 
-        insertButton.setOnClickListener(new View.OnClickListener() {
+        insertGedungButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("Ey");
+                EditText kodeGedungView = findViewById(R.id.kodeGedung);
+                EditText namaGedungView = findViewById(R.id.namaGedung);
+
                 AsyncTask.execute(new Runnable() {
                     @Override
                     public void run() {
-                        appDatabase.bukuDAO().insertBuku();
+                        db.gedungDAO().insertOne(new Gedung(kodeGedungView.getText().toString(), namaGedungView.getText().toString()));
                     }
                 });
             }
