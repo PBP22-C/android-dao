@@ -16,7 +16,12 @@ import android.widget.Spinner;
 
 import com.pbp.android_dao.entity.AppDatabase;
 import com.pbp.android_dao.entity.Gedung;
+import com.pbp.android_dao.entity.GedungWithRuangans;
+import com.pbp.android_dao.entity.Ruangan;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -79,6 +84,8 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         spinner = (Spinner) getView().findViewById(R.id.spinnerGedung);
         loadGedungToSpinner();
+
+        setDaftarRuangBySpinnerSelect("Semua Gedung");
     }
 
     private void loadGedungToSpinner() {
@@ -89,9 +96,9 @@ public class HomeFragment extends Fragment {
             public void run() {
                 allGedung = db.gedungDAO().getAll();
                 allGedung.add(0, new Gedung("All", "Semua Gedung"));
-                allGedung.add(1, new Gedung("SLKF", "Hahahihi"));
-                allGedung.add(2, new Gedung("B","Matematika"));
-                allGedung.add(3, new Gedung("C","Fisika"));
+//                allGedung.add(1, new Gedung("SLKF", "Hahahihi"));
+//                allGedung.add(2, new Gedung("B","Matematika"));
+//                allGedung.add(3, new Gedung("C","Fisika"));
                 // Create spinner with all available gedung
                 // Create an ArrayAdapter using the string array and a default spinner layout
                 ArrayAdapter<Gedung> adapter = new ArrayAdapter<Gedung>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, allGedung);
@@ -99,6 +106,38 @@ public class HomeFragment extends Fragment {
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 // Apply the adapter to the spinner
                 spinner.setAdapter(adapter);
+            }
+        });
+    }
+
+    private void setDaftarRuangBySpinnerSelect(String gedungName) {
+        AsyncTask.execute(new Runnable() {
+            List<GedungWithRuangans> gedungWithRuangans;
+            List<Gedung> gedungs;
+            ArrayList<Ruangan> ruangans = new ArrayList<>();
+
+            @Override
+            public void run() {
+                if (gedungName.equals("Semua Gedung")) {
+                    gedungWithRuangans = db.gedungDAO().getAllGedungWithRuangan();
+                } else {
+                    Gedung currentGedung = db.gedungDAO().findByName(gedungName);
+                    gedungWithRuangans = db.gedungDAO().getGedungWithRuangan(currentGedung.getKodeGedung());
+                }
+
+                gedungs = db.gedungDAO().getAll();
+
+                System.out.println(gedungs.isEmpty());
+                System.out.println(gedungWithRuangans.isEmpty());
+
+                for (GedungWithRuangans x : gedungWithRuangans) {
+                    System.out.println(x.gedung.getNama());
+                    ruangans.addAll(x.ruangans);
+                }
+
+                for (Ruangan x : ruangans) {
+                    System.out.println(x.getKodeRuangan() + ": " + x.getNama());
+                }
             }
         });
     }
