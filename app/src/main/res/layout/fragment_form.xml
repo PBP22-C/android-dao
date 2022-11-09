@@ -14,20 +14,17 @@
         android:layout_height="wrap_content">
 
             <Button
-                android:id="@+id/tambahGedung"
+                android:id="@+id/tambahGedungForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tambahGedung"
-                tools:layout_editor_absoluteX="56dp"
                 style="?android:attr/buttonBarButtonStyle"/>
             <Button
                 style="?android:attr/buttonBarButtonStyle"
-                android:id="@+id/tambahRuangan"
+                android:id="@+id/tambahRuanganForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tambahRuangan"
-                tools:layout_editor_absoluteX="218dp"
-                tools:layout_editor_absoluteY="67dp"
                 android:layout_marginStart="10dp"
                 />
     </LinearLayout>
@@ -63,8 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/insert"
-                tools:layout_editor_absoluteX="60dp"
-                tools:layout_editor_absoluteY="257dp" />
+                 />
 
 
 
