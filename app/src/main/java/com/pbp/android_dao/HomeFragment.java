@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.UiThread;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
@@ -12,6 +13,7 @@ import androidx.room.Room;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -52,11 +54,23 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         spinner = (Spinner) getView().findViewById(R.id.spinnerGedung);
         loadGedungToSpinner();
-        setDaftarRuangBySpinnerSelect("Semua Gedung");
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Gedung selectedGedung = (Gedung) adapterView.getItemAtPosition(i);
+                setDaftarRuangBySpinnerSelect(selectedGedung.getKodeGedung());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                return;
+            }
+        });
     }
 
     private void loadGedungToSpinner() {
-        System.out.println("load spinner");
+//        System.out.println("load spinner");
         AsyncTask.execute(new Runnable() {
             List<Gedung> allGedung;
             @Override
@@ -70,12 +84,18 @@ public class HomeFragment extends Fragment {
                 // Specify the layout to use when the list of choices appears
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 // Apply the adapter to the spinner
-                spinner.setAdapter(adapter);
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        spinner.setAdapter(adapter);
+                    }
+                });
             }
         });
     }
 
-    private void setDaftarRuangBySpinnerSelect(String gedungName) {
+    private void setDaftarRuangBySpinnerSelect(String kodeGedung) {
         AsyncTask.execute(new Runnable() {
             List<GedungWithRuangans> gedungWithRuangans;
             ArrayList<Ruangan> ruangans = new ArrayList<>();
@@ -83,11 +103,10 @@ public class HomeFragment extends Fragment {
             @Override
             public void run() {
                 // Fetch ruangan from db
-                if (gedungName.equals("Semua Gedung")) {
+                if (kodeGedung.equals("All")) {
                     gedungWithRuangans = db.gedungDAO().getAllGedungWithRuangan();
                 } else {
-                    Gedung currentGedung = db.gedungDAO().findByName(gedungName);
-                    gedungWithRuangans = db.gedungDAO().getGedungWithRuangan(currentGedung.getKodeGedung());
+                    gedungWithRuangans = db.gedungDAO().getGedungWithRuangan(kodeGedung);
                 }
 
                 // Append every ruangan to ArrayList<Ruangan>
@@ -97,9 +116,14 @@ public class HomeFragment extends Fragment {
 
                 // Insert ruangan to daftar ruang
                 if (!ruangans.isEmpty()) {
-                    ListView daftarRuangView = (ListView) getView().findViewById(R.id.daftarRuangLayout);
-                    RuanganListItemAdapter adapter = new RuanganListItemAdapter(ruangans, getActivity().getApplicationContext());
-                    daftarRuangView.setAdapter(adapter);
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ListView daftarRuangView = (ListView) getView().findViewById(R.id.daftarRuangLayout);
+                            RuanganListItemAdapter adapter = new RuanganListItemAdapter(ruangans, getActivity().getApplicationContext());
+                            daftarRuangView.setAdapter(adapter);
+                        }
+                    });
                 }
 
 //                // Debug purpose
