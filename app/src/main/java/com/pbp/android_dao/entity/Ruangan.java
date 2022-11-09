@@ -13,6 +13,7 @@ public class Ruangan {
     private String kodeRuangan;
     private String nama;
     private int kapasitas;
+    private String kodeGedung;
 
     public Ruangan(String kodeRuangan, String nama, int kapasitas) {
         this.kodeRuangan = kodeRuangan;
@@ -42,5 +43,13 @@ public class Ruangan {
 
     public void setKapasitas(int kapasitas) {
         this.kapasitas = kapasitas;
+    }
+
+    public String getKodeGedung() {
+        return kodeGedung;
+    }
+
+    public void setKodeGedung(String kodeGedung) {
+        this.kodeGedung = kodeGedung;
     }
 }
