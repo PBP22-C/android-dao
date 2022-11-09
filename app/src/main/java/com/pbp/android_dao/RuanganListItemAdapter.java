@@ -1,11 +1,15 @@
 package com.pbp.android_dao;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pbp.android_dao.entity.Ruangan;
 
@@ -33,13 +37,45 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
         TextView tvNamaRuangan = (TextView) convertView.findViewById(R.id.itemNamaRuangan);
         TextView tvKapasitas = (TextView) convertView.findViewById(R.id.itemKapasitas);
         TextView tvKodeGedung = (TextView) convertView.findViewById(R.id.itemKodeGedung);
+        Button btnUbah = (Button) convertView.findViewById(R.id.btnUbah);
+        Button btnHapus = (Button) convertView.findViewById(R.id.btnHapus);
 
         // Populate the data into the template view using the data object
         tvNamaRuangan.setText(ruangan.getNama());
         tvKapasitas.setText(Integer.toString(ruangan.getKapasitas()));
         tvKodeGedung.setText(ruangan.getKodeGedung());
 
+        btnUbah.setOnClickListener(view -> {
+            showFormUbahRuangan(ruangan);
+//                Toast.makeText(context, ruangan.getNama(), Toast.LENGTH_SHORT).show();
+        });
+
+        btnHapus.setOnClickListener(view -> Toast.makeText(context, ruangan.getNama(), Toast.LENGTH_SHORT).show());
+
         // Return the completed view to render on screen
         return convertView;
+    }
+
+    private void showFormUbahRuangan(Ruangan ruangan) {
+        View view = View.inflate(context, R.layout.edit_ruangan_modal, null);
+        TextView editNamaRuang = view.findViewById(R.id.editNamaRuang);
+        TextView editKodeRuang = view.findViewById(R.id.editKodeRuang);
+        TextView editKapasitas = view.findViewById(R.id.editKapasitas);
+        Button btnBatal = view.findViewById(R.id.btnBatal);
+        Button btnUbah = view.findViewById(R.id.btnUbah);
+
+        PopupWindow popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+
+//        STILL ERROR
+//        show popup window at the center of the screen
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        editNamaRuang.setText(ruangan.getNama());
+        editKodeRuang.setText(ruangan.getKodeRuangan());
+        editKapasitas.setText(Integer.toString(ruangan.getKapasitas()));
+
+        btnBatal.setOnClickListener(view1 -> popupWindow.dismiss());
+
+        btnUbah.setOnClickListener(view12 -> popupWindow.dismiss());
     }
 }
