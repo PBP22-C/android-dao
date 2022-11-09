@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.room.Room;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,7 +26,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 //    Button insertGedungButton;
 
-
+    AppDatabase db;
     ActivityMainBinding binding;
 
     @Override
@@ -49,12 +48,10 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new FormFragment());
                     binding.bottomNavigationView.getMenu().findItem(R.id.form).setChecked(true);
                     break;
-
             }
             return false;
         });
         // Get all views
-
 
 
 //        insertGedungButton.setOnClickListener(new View.OnClickListener() {
@@ -93,4 +90,25 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("Testing lagi");
     }
 
+//    private void loadGedungToSpinner() {
+//        System.out.println("load spinner");
+//        AsyncTask.execute(new Runnable() {
+//            List<Gedung> allGedung;
+//            @Override
+//            public void run() {
+//                allGedung = db.gedungDAO().getAll();
+//                allGedung.add(0, new Gedung("All", "Semua Gedung"));
+//                allGedung.add(1, new Gedung("SLKF", "Hahahihi"));
+//                allGedung.add(2, new Gedung("B","Matematika"));
+//                allGedung.add(3, new Gedung("C","Fisika"));
+//                // Create spinner with all available gedung
+//                // Create an ArrayAdapter using the string array and a default spinner layout
+//                ArrayAdapter<Gedung> adapter = new ArrayAdapter<Gedung>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, allGedung);
+//                // Specify the layout to use when the list of choices appears
+//                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                // Apply the adapter to the spinner
+//                spinner.setAdapter(adapter);
+//            }
+//        });
+//    }
 }
