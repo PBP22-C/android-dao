@@ -55,22 +55,4 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
     }
-
-//    @Override
-//    public void replaceFragment(int id) {
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        switch (id){
-//            case 1:
-//                fragmentTransaction.replace(R.id.fragment_container, new HomeFragment());
-//                break;
-//            case 2:
-//                fragmentTransaction.replace(R.id.fragment_container, new FormFragment());
-//                break;
-//            case 3:
-//                fragmentTransaction.replace(R.id.fragment_container, new FormRuanganFragment());
-//                break;
-//        }
-//        fragmentTransaction.commit();
-//    }
 }

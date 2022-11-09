@@ -22,7 +22,7 @@ public interface GedungDAO {
     List<GedungWithRuangans> getGedungWithRuangan(String kodeGedung);
 
 //    @Query("SELECT * FROM gedung WHERE kodeGedung IN (:gedungIds)")
-//    List<Gedung> loadAllByIds(int[] gedungIds);
+//    List<Gedung> loadAllByIds(int[] ge dungIds);
 
     @Query("SELECT * FROM gedung WHERE nama LIKE :nama LIMIT 1")
     Gedung findByName(String nama);
