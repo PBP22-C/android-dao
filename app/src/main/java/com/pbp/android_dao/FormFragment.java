@@ -1,110 +1,189 @@
 package com.pbp.android_dao;
 
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.room.Room;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.pbp.android_dao.entity.AppDatabase;
 import com.pbp.android_dao.entity.Gedung;
-import android.widget.Button;
+import com.pbp.android_dao.entity.Ruangan;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FormFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class FormFragment extends Fragment {
-    AppDatabase db;
+    private Button btnTambahGedung, btnTambahRuangan;
+    private LinearLayout formLayout;
+    private final AppDatabase db;
+    private Spinner spinner;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private OnFragmentInteractionListener mListener;
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-    private Button insertGedungButton;
-
-    public FormFragment() {
-        // Required empty public constructor
+    public FormFragment(AppDatabase db) {
+        this.db = db;
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FormFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FormFragment newInstance(String param1, String param2) {
-        FormFragment fragment = new FormFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-        db = Room.databaseBuilder(getActivity().getApplicationContext(), AppDatabase.class, "Gedung").build();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_form, container, false);
-        Button gedungFormBtn = view.findViewById(R.id.tambahGedungForm);
-        Button ruanganFormBtn = view.findViewById(R.id.tambahRuanganForm);
-        gedungFormBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.replaceFragment(new FormFragment());
-            }
-        });
-        ruanganFormBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.replaceFragment(new FormRuanganFragment());
-            }
-        });
-        return view;
-    }
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+        return inflater.inflate(R.layout.fragment_form, container, false);
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        btnTambahGedung = getView().findViewById(R.id.btnTambahGedung);
+        btnTambahRuangan = getView().findViewById(R.id.btnTambahRuangan);
+        formLayout = getView().findViewById(R.id.layoutForm);
+        createFormTambahGedung();
 
+        btnTambahGedung.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createFormTambahGedung();
+            }
+        });
+
+        btnTambahRuangan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createFormTambahRuang();
+            }
+        });
+    }
+
+    private void createFormTambahGedung() {
+        formLayout.removeAllViews();
+        formLayout.addView(getLayoutInflater().inflate(R.layout.tambah_gedung, null));
+        EditText etNamaGedung = getView().findViewById(R.id.namaGedung);
+        EditText etKodeGedung = getView().findViewById(R.id.kodeGedung);
+        Button btnSimpan = getView().findViewById(R.id.insertGedungButton);
+
+        btnSimpan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String namaGedung = etNamaGedung.getText().toString().trim();
+                String kodeGedung = etKodeGedung.getText().toString().trim();
+                Gedung gedung = new Gedung(namaGedung, kodeGedung);
+                if(namaGedung.isEmpty() || kodeGedung.isEmpty()) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Data tidak boleh kosong", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                AsyncTask.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        List<Gedung> listGedung = db.gedungDAO().getGedungByKode(kodeGedung);
+                        if(listGedung.size() > 0) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getActivity().getApplicationContext(), "Kode Gedung sudah ada", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            return;
+                        }
+                        db.gedungDAO().insertOne(gedung.getKodeGedung(), gedung.getNamaGedung());
+                        Log.i("GEDUNG", "BERHASIL");
+                    }
+                });
+                Toast.makeText(getContext(), "Gedung berhasil ditambahkan", Toast.LENGTH_SHORT).show();
+                etKodeGedung.setText("");
+                etNamaGedung.setText("");
+            }
+        });
+    }
+
+    private void createFormTambahRuang() {
+        formLayout.removeAllViews();
+        formLayout.addView(getLayoutInflater().inflate(R.layout.tambah_ruang, null));
+        EditText etNamaRuang = getView().findViewById(R.id.namaRuang);
+        EditText etKodeRuang = getView().findViewById(R.id.kodeRuang);
+        EditText etKapasitas = getView().findViewById(R.id.kapasitas);
+        Button btnSimpan = getView().findViewById(R.id.insertRuangButton);
+        spinner = (Spinner) getView().findViewById(R.id.spinnerTambahRuang);
+
+        getListGedung();
+
+        btnSimpan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String namaRuang = etNamaRuang.getText().toString();
+                String kodeRuang = etKodeRuang.getText().toString();
+                String kapasitas = etKapasitas.getText().toString();
+                String kodeGedung = spinner.getSelectedItem().toString().split(" - ")[0];
+
+                Log.i("RUANGAN", kodeGedung);
+                if(namaRuang.isEmpty() || kodeRuang.isEmpty() || kodeGedung.isEmpty() || kapasitas.isEmpty()) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Data tidak boleh kosong", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                AsyncTask.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        List<Ruangan> listRuangan = db.ruanganDAO().findByKode(kodeRuang);
+                        if(listRuangan.size() > 0) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getActivity().getApplicationContext(), "Kode Ruangan sudah ada", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            return;
+                        }
+                        db.ruanganDAO().insertOne(kodeRuang, namaRuang, Integer.parseInt(kapasitas), kodeGedung);
+                        Log.i("RUANGAN", "BERHASIL");
+                    }
+                });
+                Toast.makeText(getContext(), "Ruangan berhasil ditambahkan", Toast.LENGTH_SHORT).show();
+                etKodeRuang.setText("");
+                etNamaRuang.setText("");
+                etKapasitas.setText("");
+            }
+        });
+    }
+
+    private void getListGedung(){
+        AsyncTask.execute(new Runnable() {
+            List<String> allGedung = new ArrayList<>();
+            @Override
+            public void run() {
+                List<Gedung> listGedung = db.gedungDAO().getAll();
+                if(listGedung.size() > 0) {
+                    for (Gedung gedung : listGedung) {
+                        allGedung.add(gedung.getKodeGedung() + " - " + gedung.getNamaGedung());
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, allGedung);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(adapter);
+                }else{
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity().getApplicationContext(), "Data Gedung Kosong", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        });
     }
 }

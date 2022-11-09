@@ -17,7 +17,7 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
 
     public RuanganListItemAdapter(ArrayList<Ruangan> ruangans, Context context) {
         super(context, R.layout.list_item, ruangans);
-        this.ruangans = this.ruangans;
+        this.ruangans = ruangans;
         this.context = context;
     }
 
@@ -33,10 +33,12 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
         TextView tvNamaRuangan = (TextView) convertView.findViewById(R.id.itemNamaRuangan);
         TextView tvKapasitas = (TextView) convertView.findViewById(R.id.itemKapasitas);
         TextView tvKodeGedung = (TextView) convertView.findViewById(R.id.itemKodeGedung);
+
         // Populate the data into the template view using the data object
         tvNamaRuangan.setText(ruangan.getNama());
         tvKapasitas.setText(Integer.toString(ruangan.getKapasitas()));
         tvKodeGedung.setText(ruangan.getKodeGedung());
+
         // Return the completed view to render on screen
         return convertView;
     }

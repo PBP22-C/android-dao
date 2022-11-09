@@ -21,17 +21,17 @@ public interface GedungDAO {
     @Query("SELECT * FROM gedung WHERE kodeGedung IN (:kodeGedung)")
     List<GedungWithRuangans> getGedungWithRuangan(String kodeGedung);
 
-//    @Query("SELECT * FROM gedung WHERE kodeGedung IN (:gedungIds)")
-//    List<Gedung> loadAllByIds(int[] gedungIds);
+    @Query("SELECT * FROM gedung WHERE kodeGedung IN (:kodeGedung)")
+    List<Gedung> getGedungByKode(String kodeGedung);
 
-    @Query("SELECT * FROM gedung WHERE nama LIKE :nama LIMIT 1")
+    @Query("SELECT * FROM gedung WHERE namaGedung LIKE :nama LIMIT 1")
     Gedung findByName(String nama);
 
     @Insert
     void insertAll(Gedung... gedungs);
 
-    @Insert
-    void insertOne(Gedung gedung);
+    @Query("INSERT INTO gedung (kodeGedung, namaGedung) VALUES (:kodeGedung, :namaGedung)")
+    void insertOne(String kodeGedung, String namaGedung);
 
     @Delete
     void delete(Gedung gedung);

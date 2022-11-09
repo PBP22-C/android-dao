@@ -18,8 +18,14 @@ public interface RuanganDAO {
     @Query("SELECT * FROM ruangan WHERE nama LIKE :nama LIMIT 1")
     Ruangan findByName(String nama);
 
+    @Query("SELECT * FROM ruangan WHERE kodeRuangan LIKE :kodeRuangan LIMIT 1")
+    List<Ruangan> findByKode(String kodeRuangan);
+
     @Insert
     void insertAll(Ruangan... ruangans);
+
+    @Query("INSERT INTO ruangan (kodeRuangan, nama, kapasitas, kodeGedung) VALUES (:kodeRuangan, :nama,:kapasitas, :kodeGedung)")
+    void insertOne(String kodeRuangan, String nama, int kapasitas, String kodeGedung);
 
     @Delete
     void delete(Ruangan ruangan);
