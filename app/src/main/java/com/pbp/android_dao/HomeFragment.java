@@ -95,7 +95,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void run() {
                 allGedung = db.gedungDAO().getAll();
-                allGedung.add(0, new Gedung("All", "Semua Gedung"));
+//                allGedung.add(0, new Gedung("All", "Semua Gedung"));
 //                allGedung.add(1, new Gedung("SLKF", "Hahahihi"));
 //                allGedung.add(2, new Gedung("B","Matematika"));
 //                allGedung.add(3, new Gedung("C","Fisika"));
