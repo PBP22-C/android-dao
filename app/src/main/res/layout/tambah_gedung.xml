@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".FormFragment"
     >
 
     <EditText
@@ -12,17 +13,10 @@
         android:layout_height="43dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/nama_gedung"
-        tools:layout_editor_absoluteX="60dp"
-        tools:layout_editor_absoluteY="200dp" />
-
-    <Button
-        android:id="@+id/insertGedungButton"
-        android:layout_width="319dp"
-        android:layout_height="47dp"
-        android:text="@string/insert"
-        tools:layout_editor_absoluteX="60dp"
-        tools:layout_editor_absoluteY="257dp" />
+        android:hint="@string/nama_gedung"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/kodeGedung"
@@ -30,24 +24,20 @@
         android:layout_height="50dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/kode_gedung"
-        tools:layout_editor_absoluteX="60dp"
-        tools:layout_editor_absoluteY="140dp" />
+        android:hint="@string/kode_gedung"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/namaGedung" />
 
     <Button
-        android:id="@+id/tambahGedung"
-        android:layout_width="153dp"
-        android:layout_height="59dp"
-        android:text="@string/tambahGedung"
-        tools:layout_editor_absoluteX="56dp"
-        tools:layout_editor_absoluteY="67dp" />
-
-    <Button
-        android:id="@+id/tambahRuangan"
-        android:layout_width="166dp"
-        android:layout_height="59dp"
-        android:text="@string/tambahRuangan"
-        tools:layout_editor_absoluteX="218dp"
-        tools:layout_editor_absoluteY="67dp" />
+        android:id="@+id/insertGedungButton"
+        android:layout_width="319dp"
+        android:layout_height="47dp"
+        android:text="@string/insert"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kodeGedung" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

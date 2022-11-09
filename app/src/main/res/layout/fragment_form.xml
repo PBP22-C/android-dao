@@ -3,53 +3,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:constraints="http://schemas.android.com/apk/res-auto"
     tools:context=".FormFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:paddingVertical="16dp"
+        android:id="@+id/button_container"
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/namaGedung"
-        android:layout_width="316dp"
-        android:layout_height="43dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/nama_gedung"
-        tools:layout_editor_absoluteX="60dp"
-        tools:layout_editor_absoluteY="200dp" />
-
-    <Button
-        android:id="@+id/insertGedungButton"
-        android:layout_width="319dp"
-        android:layout_height="47dp"
-        android:text="@string/insert"
-        tools:layout_editor_absoluteX="60dp"
-        tools:layout_editor_absoluteY="257dp" />
-
-    <EditText
-        android:id="@+id/kodeGedung"
-        android:layout_width="317dp"
-        android:layout_height="50dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/kode_gedung"
-        tools:layout_editor_absoluteX="60dp"
-        tools:layout_editor_absoluteY="140dp" />
-
-    <Button
-        android:id="@+id/tambahGedung"
+        <Button
+        constraints:layout_constraintTop_toTopOf="parent"
+        constraints:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/btn_tambah_gedung"
         android:layout_width="153dp"
         android:layout_height="59dp"
+            android:layout_marginHorizontal="8dp"
         android:text="@string/tambahGedung"
-        tools:layout_editor_absoluteX="56dp"
-        tools:layout_editor_absoluteY="67dp" />
+        />
 
-    <Button
-        android:id="@+id/tambahRuangan"
-        android:layout_width="166dp"
-        android:layout_height="59dp"
-        android:text="@string/tambahRuangan"
-        tools:layout_editor_absoluteX="218dp"
-        tools:layout_editor_absoluteY="67dp" />
+        <Button
+            constraints:layout_constraintTop_toTopOf="parent"
+            constraints:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/btn_tambah_ruangan"
+            android:layout_width="166dp"
+            android:layout_height="59dp"
+            android:layout_marginHorizontal="8dp"
+            android:text="@string/tambahRuangan"/>
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:id="@+id/linear_layout_form"
+        constraints:layout_constraintTop_toBottomOf="@+id/button_container"
+        android:orientation="vertical">
 
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
