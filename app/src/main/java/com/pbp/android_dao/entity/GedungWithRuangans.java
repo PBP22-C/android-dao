@@ -9,8 +9,8 @@ public class GedungWithRuangans {
     @Embedded
     public Gedung gedung;
     @Relation(
-            parentColumn = "kodeGedung",
-            entityColumn = "kodeGedung"
+            parentColumn = "kodeGedung", // Kolom PK tabel Gedung
+            entityColumn = "kodeGedung"  // Kolom FK di tabel Ruangan
     )
     public List<Ruangan> ruangans;
 }
