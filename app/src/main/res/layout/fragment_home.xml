@@ -13,17 +13,17 @@
         android:layout_margin="9dp"
         android:text="Pilih Gedung"
         android:textSize="20sp"
-        android:id="@+id/tv_pilihgedung"
+        android:id="@+id/tvPilihGedung"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="36dp"
         tools:layout_editor_absoluteY="25dp" />
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tv_pilihgedung"
+        app:layout_constraintTop_toBottomOf="@+id/tvPilihGedung"
         android:id="@+id/spinnerGedung"
         android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="@+id/tv_pilihgedung"
+        app:layout_constraintStart_toStartOf="@+id/tvPilihGedung"
         android:prompt="@string/pilih_gedung"
         />
     <TextView
@@ -32,7 +32,7 @@
         android:layout_margin="9dp"
         android:text="Daftar Ruang"
         android:textSize="20sp"
-        android:id="@+id/tv_daftar_ruang"
+        android:id="@+id/tvDaftarRuang"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="36dp"
         tools:layout_editor_absoluteY="25dp"
@@ -41,10 +41,9 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/listView"
+        android:id="@+id/daftarRuangLayout"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_daftar_ruang"
-
-        />
+        app:layout_constraintTop_toBottomOf="@+id/tvDaftarRuang">
+    </ListView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

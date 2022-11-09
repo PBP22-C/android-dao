@@ -1,11 +1,13 @@
 package com.pbp.android_dao;
 
 import android.os.AsyncTask;
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.room.Room;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,21 +34,16 @@ public class FormFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_form, container, false);
+        db = Room.databaseBuilder(getActivity().getApplicationContext(), AppDatabase.class, "Gedung").build();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        btnTambahGedung = getView().findViewById(R.id.btn_tambah_gedung);
-        btnTambahRuangan = getView().findViewById(R.id.btn_tambah_ruangan);
-        formLayout = getView().findViewById(R.id.linear_layout_form);
+        btnTambahGedung = getView().findViewById(R.id.btnTambahGedung);
+        btnTambahRuangan = getView().findViewById(R.id.btnTambahRuangan);
+        formLayout = getView().findViewById(R.id.layoutForm);
+        formLayout.addView(getLayoutInflater().inflate(R.layout.tambah_gedung, null));
 
         btnTambahGedung.setOnClickListener(new View.OnClickListener() {
             @Override

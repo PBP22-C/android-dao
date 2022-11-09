@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    Button insertGedungButton;
     ActivityMainBinding binding;
 
     @Override
@@ -40,38 +39,38 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.home:
                     replaceFragment(new HomeFragment());
+                    binding.bottomNavigationView.getMenu().findItem(R.id.home).setChecked(true);
                     break;
                 case R.id.form:
                     replaceFragment(new FormFragment());
+                    binding.bottomNavigationView.getMenu().findItem(R.id.form).setChecked(true);
                     break;
             }
             return false;
         });
-        // Get all views
-//        insertGedungButton = findViewById(R.id.insertGedungButton);
-
-//        insertGedungButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                EditText kodeGedungView = findViewById(R.id.kodeGedung);
-//                EditText namaGedungView = findViewById(R.id.namaGedung);
-//
-//                AsyncTask.execute(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Intent intent = new Intent(view.getContext(), MainActivity.class);
-//                        startActivityForResult(intent,0);
-//                        db.gedungDAO().insertOne(new Gedung("SLKF", "Hahahihi"));
-//                        db.gedungDAO().insertOne(new Gedung(kodeGedungView.getText().toString(), namaGedungView.getText().toString()));
-//                    }
-//                });
-//            }
-//        });
     }
-    private void replaceFragment(Fragment fragment){
+    public void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
     }
+
+//    @Override
+//    public void replaceFragment(int id) {
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        switch (id){
+//            case 1:
+//                fragmentTransaction.replace(R.id.fragment_container, new HomeFragment());
+//                break;
+//            case 2:
+//                fragmentTransaction.replace(R.id.fragment_container, new FormFragment());
+//                break;
+//            case 3:
+//                fragmentTransaction.replace(R.id.fragment_container, new FormRuanganFragment());
+//                break;
+//        }
+//        fragmentTransaction.commit();
+//    }
 }
