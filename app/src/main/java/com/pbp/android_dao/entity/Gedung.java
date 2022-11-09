@@ -39,6 +39,6 @@ public class Gedung {
 
     @Override
     public String toString() {
-        return nama;
+        return nama + (kodeGedung != "" ? " - " + kodeGedung : "");
     }
 }

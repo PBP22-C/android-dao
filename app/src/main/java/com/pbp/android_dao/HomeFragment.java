@@ -87,9 +87,11 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        // Load gedung data to spinner
         spinner = (Spinner) getView().findViewById(R.id.spinnerGedung);
         loadGedungToSpinner();
 
+        // Change list ruangan when spiner item is selected
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -105,23 +107,25 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadGedungToSpinner() {
-//        System.out.println("load spinner");
         AsyncTask.execute(new Runnable() {
             List<Gedung> allGedung;
             @Override
             public void run() {
+                // Get gedung data from DB
                 allGedung = db.gedungDAO().getAll();
-                allGedung.add(0, new Gedung("All", "Semua Gedung"));
+                // Default option
+                allGedung.add(0, new Gedung("", "Semua Gedung"));
 //                allGedung.add(1, new Gedung("SLKF", "Hahahihi"));
 //                allGedung.add(2, new Gedung("B","Matematika"));
 //                allGedung.add(3, new Gedung("C","Fisika"));
+
                 // Create spinner with all available gedung
                 // Create an ArrayAdapter using the string array and a default spinner layout
                 ArrayAdapter<Gedung> adapter = new ArrayAdapter<Gedung>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, allGedung);
                 // Specify the layout to use when the list of choices appears
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                // Apply the adapter to the spinner
 
+                // Apply the adapter to the spinner
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -140,18 +144,18 @@ public class HomeFragment extends Fragment {
             @Override
             public void run() {
                 // Fetch ruangan from db
-                if (kodeGedung.equals("All")) {
+                if (kodeGedung.equals("")) {
                     gedungWithRuangans = db.gedungDAO().getAllGedungWithRuangan();
                 } else {
                     gedungWithRuangans = db.gedungDAO().getGedungWithRuangan(kodeGedung);
                 }
 
                 // Append every ruangan to ArrayList<Ruangan>
-                for (GedungWithRuangans x : gedungWithRuangans) {
-                    ruangans.addAll(x.ruangans);
+                for (GedungWithRuangans gedung : gedungWithRuangans) {
+                    ruangans.addAll(gedung.ruangans);
                 }
 
-                // Insert ruangan to daftar ruang
+                // Insert ruangan to daftar ruang view
                 if (!ruangans.isEmpty()) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
@@ -162,11 +166,6 @@ public class HomeFragment extends Fragment {
                         }
                     });
                 }
-
-//                // Debug purpose
-//                for (Ruangan x : ruangans) {
-//                    System.out.println(x.getKodeRuangan() + ": " + x.getNama());
-//                }
             }
         });
     }
