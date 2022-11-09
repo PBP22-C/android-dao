@@ -24,7 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    Button insertGedungButton;
+//    Button insertGedungButton;
+
+    AppDatabase db;
     ActivityMainBinding binding;
 
     @Override
@@ -40,15 +42,17 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.home:
                     replaceFragment(new HomeFragment());
+                    binding.bottomNavigationView.getMenu().findItem(R.id.home).setChecked(true);
                     break;
                 case R.id.form:
                     replaceFragment(new FormFragment());
+                    binding.bottomNavigationView.getMenu().findItem(R.id.form).setChecked(true);
                     break;
             }
             return false;
         });
         // Get all views
-//        insertGedungButton = findViewById(R.id.insertGedungButton);
+
 
 //        insertGedungButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
