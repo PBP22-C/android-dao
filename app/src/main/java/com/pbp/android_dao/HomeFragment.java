@@ -27,52 +27,17 @@ import com.pbp.android_dao.entity.Ruangan;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HomeFragment extends Fragment {
     AppDatabase db;
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private Spinner spinner;
 
-    public HomeFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public HomeFragment(AppDatabase db) {
+        this.db = db;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Get database
-        db = Room.databaseBuilder(getActivity().getApplicationContext(), AppDatabase.class, "Gedung").build();
     }
 
     @Override
@@ -88,8 +53,6 @@ public class HomeFragment extends Fragment {
         spinner = (Spinner) getView().findViewById(R.id.spinnerGedung);
         loadGedungToSpinner();
         setDaftarRuangBySpinnerSelect("Semua Gedung");
-
-//        spinner.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener());
     }
 
     private void loadGedungToSpinner() {
@@ -100,9 +63,7 @@ public class HomeFragment extends Fragment {
             public void run() {
                 allGedung = db.gedungDAO().getAll();
                 allGedung.add(0, new Gedung("All", "Semua Gedung"));
-//                allGedung.add(1, new Gedung("SLKF", "Hahahihi"));
-//                allGedung.add(2, new Gedung("B","Matematika"));
-//                allGedung.add(3, new Gedung("C","Fisika"));
+
                 // Create spinner with all available gedung
                 // Create an ArrayAdapter using the string array and a default spinner layout
                 ArrayAdapter<Gedung> adapter = new ArrayAdapter<Gedung>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, allGedung);

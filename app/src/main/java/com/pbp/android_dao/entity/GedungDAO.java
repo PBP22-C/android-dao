@@ -21,15 +21,8 @@ public interface GedungDAO {
     @Query("SELECT * FROM gedung WHERE kodeGedung IN (:kodeGedung)")
     List<GedungWithRuangans> getGedungWithRuangan(String kodeGedung);
 
-//    @Query("SELECT * FROM gedung WHERE kodeGedung IN (:gedungIds)")
-//    List<Gedung> loadAllByIds(int[] gedungIds);
-
-    @Transaction
     @Query("SELECT * FROM gedung WHERE kodeGedung IN (:kodeGedung)")
-    List<GedungWithRuangans> getGedungWithRuangan(String kodeGedung);
-
-//    @Query("SELECT * FROM gedung WHERE kodeGedung IN (:gedungIds)")
-//    List<Gedung> loadAllByIds(int[] gedungIds);
+    List<Gedung> getGedungByKode(String kodeGedung);
 
     @Query("SELECT * FROM gedung WHERE namaGedung LIKE :nama LIMIT 1")
     Gedung findByName(String nama);
