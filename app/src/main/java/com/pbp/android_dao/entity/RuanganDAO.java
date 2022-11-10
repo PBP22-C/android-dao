@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -26,6 +27,9 @@ public interface RuanganDAO {
 
     @Query("INSERT INTO ruangan (kodeRuangan, nama, kapasitas, kodeGedung) VALUES (:kodeRuangan, :nama,:kapasitas, :kodeGedung)")
     void insertOne(String kodeRuangan, String nama, int kapasitas, String kodeGedung);
+
+    @Update
+    void update(Ruangan ruangan);
 
     @Delete
     void delete(Ruangan ruangan);

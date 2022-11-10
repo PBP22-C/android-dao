@@ -76,37 +76,38 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
         return convertView;
     }
 //    private void showFormUbahRuangan(Ruangan ruangan){
-    private void showFormUbahRuangan(View view, Ruangan ruangan){
-        dialogBuilder = new AlertDialog.Builder(view.getRootView().getContext());
+    private void showFormUbahRuangan(View v, Ruangan ruangan){
+        dialogBuilder = new AlertDialog.Builder(v.getRootView().getContext());
         final View formPopupView = LayoutInflater.from(getContext()).inflate(R.layout.edit_ruangan_modal, null);
-//        EditText editKodeRuang = (EditText) formPopupView.findViewById(R.id.editKodeRuang);
-//        editKodeRuang.setText(ruangan.getKodeRuangan());
-//        EditText editNamaRuang = (EditText) formPopupView.findViewById(R.id.editNamaRuang);
-//        editNamaRuang.setText(ruangan.getNama());
-//        EditText editKapasitas = (EditText) formPopupView.findViewById(R.id.editKapasitas);
-//        editKapasitas.setText(Integer.toString(ruangan.getKapasitas()));
-//        spinner = (Spinner) formPopupView.findViewById(R.id.spinnerEditRuang);
-//
-//
-//        Button btnSimpan = (Button) formPopupView.findViewById(R.id.btnSimpan);
-//        btnSimpan.setOnClickListener(view -> {
-//            AsyncTask.execute(() -> {
-//                ruangan.setNama(tvNamaRuangan.getText().toString());
-//                ruangan.setKapasitas(Integer.parseInt(tvKapasitas.getText().toString()));
-//                ruangan.setKodeGedung(tvKodeGedung.getText().toString());
-//                db.ruanganDAO().update(ruangan);
-//                ((MainActivity) context).runOnUiThread(() -> {
-//                    notifyDataSetChanged();
-//                    Toast.makeText(context, "Ruangan berhasil diubah", Toast.LENGTH_SHORT).show();
-//                    dialog.dismiss();
-//                });
-//            });
-//        });
-//
-//        Button btnBatal = (Button) formPopupView.findViewById(R.id.btnBatal);
-//        btnBatal.setOnClickListener(view -> {
-//            dialog.dismiss();
-//        });
+        EditText editKodeRuang = (EditText) formPopupView.findViewById(R.id.editKodeRuang);
+        editKodeRuang.setText(ruangan.getKodeRuangan());
+        EditText editNamaRuang = (EditText) formPopupView.findViewById(R.id.editNamaRuang);
+        editNamaRuang.setText(ruangan.getNama());
+        EditText editKapasitas = (EditText) formPopupView.findViewById(R.id.editKapasitas);
+        editKapasitas.setText(Integer.toString(ruangan.getKapasitas()));
+        spinner = (Spinner) formPopupView.findViewById(R.id.spinnerEditRuang);
+
+
+        Button btnSimpan = (Button) formPopupView.findViewById(R.id.btnUbahData);
+        btnSimpan.setOnClickListener(view -> {
+            AsyncTask.execute(() -> {
+                ruangan.setNama(editNamaRuang.getText().toString());
+                ruangan.setKapasitas(Integer.parseInt(editKapasitas.getText().toString()));
+                ruangan.setKodeGedung(editKodeRuang.getText().toString());
+                db.ruanganDAO().update(ruangan);
+                // Error disini cuy
+                ((MainActivity) context).runOnUiThread(() -> {
+                    notifyDataSetChanged();
+                    Toast.makeText(context, "Ruangan berhasil diubah", Toast.LENGTH_SHORT).show();
+                });
+            });
+            dialog.dismiss();
+        });
+
+        Button btnBatal = (Button) formPopupView.findViewById(R.id.btnBatal);
+        btnBatal.setOnClickListener(view -> {
+            dialog.dismiss();
+        });
 
         dialogBuilder.setView(formPopupView);
         dialog = dialogBuilder.create();
