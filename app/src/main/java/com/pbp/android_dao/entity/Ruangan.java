@@ -6,7 +6,12 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity (foreignKeys = {
+        @ForeignKey(entity = Gedung.class,
+                parentColumns = "kodeGedung",
+                childColumns = "kodeGedung")
+        }
+)
 public class Ruangan {
     @PrimaryKey
     @NonNull

@@ -97,6 +97,7 @@ public class FormFragment extends Fragment {
                     @Override
                     public void run() {
                         List<Gedung> listGedung = db.gedungDAO().getGedungByKode(kodeGedung);
+                        System.out.println(listGedung.isEmpty());
                         if(listGedung.size() > 0) {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
@@ -108,11 +109,17 @@ public class FormFragment extends Fragment {
                         }
                         db.gedungDAO().insertOne(gedung.getKodeGedung(), gedung.getNamaGedung());
                         Log.i("GEDUNG", "BERHASIL");
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getContext(), "Gedung berhasil ditambahkan", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        etKodeGedung.setText("");
+                        etNamaGedung.setText("");
                     }
                 });
-                Toast.makeText(getContext(), "Gedung berhasil ditambahkan", Toast.LENGTH_SHORT).show();
-                etKodeGedung.setText("");
-                etNamaGedung.setText("");
             }
         });
     }
@@ -134,6 +141,10 @@ public class FormFragment extends Fragment {
                 String namaRuang = etNamaRuang.getText().toString();
                 String kodeRuang = etKodeRuang.getText().toString();
                 String kapasitas = etKapasitas.getText().toString();
+                if (spinner.getSelectedItem() == null) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Belum ada gedung yang valid, silahkan masukkan data gedung terlebih dahulu", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 String kodeGedung = spinner.getSelectedItem().toString().split(" - ")[0];
 
                 Log.i("RUANGAN", kodeGedung);
@@ -145,7 +156,6 @@ public class FormFragment extends Fragment {
                     @Override
                     public void run() {
                         List<Ruangan> listRuangan = db.ruanganDAO().findByKode(kodeRuang);
-                        System.out.println(listRuangan.size());
                         if(listRuangan.size() > 0) {
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override

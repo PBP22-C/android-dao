@@ -93,15 +93,43 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
         editKapasitas.setText(Integer.toString(ruangan.getKapasitas()));
 
         btnSimpan.setOnClickListener(view -> {
-            ruangan.setNama(editNamaRuang.getText().toString());
-            ruangan.setKapasitas(Integer.parseInt(editKapasitas.getText().toString()));
+            String kodeRuang = editKodeRuang.getText().toString().trim();
+            String namaRuang = editNamaRuang.getText().toString().trim();
+            String kapasitas = editKapasitas.getText().toString().trim();
+
+            if (kodeRuang.isEmpty() || namaRuang.isEmpty() || kapasitas.isEmpty()) {
+                Toast.makeText(context, "Data tidak boleh kosong", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            ruangan.setNama(namaRuang);
+            ruangan.setKapasitas(Integer.parseInt(kapasitas));
             ruangan.setKodeGedung(spinner.getSelectedItem().toString().split(" - ")[0]);
+
             AsyncTask.execute(() -> {
+                if (!ruangan.getKodeRuangan().equals(kodeRuang)) {
+                    List<Ruangan> findRuanganWithKodeRuang = db.ruanganDAO().findByKode(kodeRuang);
+                    if (findRuanganWithKodeRuang.size() > 0) {
+                        ((MainActivity) context).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(context, "Kode ruang sudah ada", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        return;
+                    }
+                }
+                ruangan.setKodeRuangan(kodeRuang);
                 db.ruanganDAO().update(ruangan);
+
+                ((MainActivity) context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        notifyDataSetChanged();
+                        Toast.makeText(context, "Ruangan berhasil diubah", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                });
             });
-            notifyDataSetChanged();
-            Toast.makeText(context, "Ruangan berhasil diubah", Toast.LENGTH_SHORT).show();
-            dialog.dismiss();
         });
 
         btnBatal.setOnClickListener(view -> {
