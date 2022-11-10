@@ -116,12 +116,14 @@ public class HomeFragment extends Fragment {
 
                 ListView daftarRuangView = (ListView) getView().findViewById(R.id.daftarRuangLayout);
                 RuanganListItemAdapter adapter = new RuanganListItemAdapter(ruangans, getContext(), db);
-                daftarRuangView.setAdapter(adapter);
+//                add uithread
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        daftarRuangView.setAdapter(adapter);
+                    }
+                });
 
-//                // Debug purpose
-//                for (Ruangan x : ruangans) {
-//                    System.out.println(x.getKodeRuangan() + ": " + x.getNama());
-//                }
             }
         });
     }
