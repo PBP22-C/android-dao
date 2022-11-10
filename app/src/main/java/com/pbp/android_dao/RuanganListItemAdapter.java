@@ -55,9 +55,7 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
         tvKodeGedung.setText(ruangan.getKodeGedung());
 
         btnUbah.setOnClickListener(view -> {
-//            showFormUbahRuangan(ruangan);
             showFormUbahRuangan(view, ruangan);
-//                Toast.makeText(context, ruangan.getNama(), Toast.LENGTH_SHORT).show();
         });
 
         btnHapus.setOnClickListener(new View.OnClickListener() {
@@ -75,20 +73,21 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
         // Return the completed view to render on screen
         return convertView;
     }
-//    private void showFormUbahRuangan(Ruangan ruangan){
+
     private void showFormUbahRuangan(View v, Ruangan ruangan){
         dialogBuilder = new AlertDialog.Builder(context);
         final View formPopupView = LayoutInflater.from(getContext()).inflate(R.layout.edit_ruangan_modal, null);
         EditText editKodeRuang = (EditText) formPopupView.findViewById(R.id.editKodeRuang);
-        editKodeRuang.setText(ruangan.getKodeRuangan());
         EditText editNamaRuang = (EditText) formPopupView.findViewById(R.id.editNamaRuang);
-        editNamaRuang.setText(ruangan.getNama());
         EditText editKapasitas = (EditText) formPopupView.findViewById(R.id.editKapasitas);
-        editKapasitas.setText(Integer.toString(ruangan.getKapasitas()));
         spinner = (Spinner) formPopupView.findViewById(R.id.spinnerEditRuang);
-
-
         Button btnSimpan = (Button) formPopupView.findViewById(R.id.btnUbahData);
+        Button btnBatal = (Button) formPopupView.findViewById(R.id.btnBatal);
+
+        editKodeRuang.setText(ruangan.getKodeRuangan());
+        editNamaRuang.setText(ruangan.getNama());
+        editKapasitas.setText(Integer.toString(ruangan.getKapasitas()));
+
         btnSimpan.setOnClickListener(view -> {
             AsyncTask.execute(() -> {
                 ruangan.setNama(editNamaRuang.getText().toString());
@@ -103,7 +102,6 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
             dialog.dismiss();
         });
 
-        Button btnBatal = (Button) formPopupView.findViewById(R.id.btnBatal);
         btnBatal.setOnClickListener(view -> {
             dialog.dismiss();
         });
@@ -112,27 +110,4 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
         dialog = dialogBuilder.create();
         dialog.show();
     }
-
-//    private void showFormUbahRuangan(Ruangan ruangan) {
-//        View view = View.inflate(context, R.layout.edit_ruangan_modal, null);
-//        TextView editNamaRuang = view.findViewById(R.id.editNamaRuang);
-//        TextView editKodeRuang = view.findViewById(R.id.editKodeRuang);
-//        TextView editKapasitas = view.findViewById(R.id.editKapasitas);
-//        Button btnBatal = view.findViewById(R.id.btnBatal);
-//        Button btnUbah = view.findViewById(R.id.btnUbah);
-//
-//        PopupWindow popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-//
-////        STILL ERROR
-////        show popup window at the center of the screen
-//        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-//
-//        editNamaRuang.setText(ruangan.getNama());
-//        editKodeRuang.setText(ruangan.getKodeRuangan());
-//        editKapasitas.setText(Integer.toString(ruangan.getKapasitas()));
-//
-//        btnBatal.setOnClickListener(view1 -> popupWindow.dismiss());
-//
-//        btnUbah.setOnClickListener(view12 -> popupWindow.dismiss());
-//    }
 }
