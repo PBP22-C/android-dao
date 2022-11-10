@@ -3,6 +3,7 @@ package com.pbp.android_dao;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pbp.android_dao.entity.AppDatabase;
+import com.pbp.android_dao.entity.Gedung;
 import com.pbp.android_dao.entity.Ruangan;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
     ArrayList<Ruangan> ruangans;
@@ -81,6 +84,8 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
         EditText editNamaRuang = (EditText) formPopupView.findViewById(R.id.editNamaRuang);
         EditText editKapasitas = (EditText) formPopupView.findViewById(R.id.editKapasitas);
         spinner = (Spinner) formPopupView.findViewById(R.id.spinnerEditRuang);
+        getListGedung(ruangan.getKodeGedung());
+
         Button btnSimpan = (Button) formPopupView.findViewById(R.id.btnUbahData);
         Button btnBatal = (Button) formPopupView.findViewById(R.id.btnBatal);
 
@@ -89,16 +94,14 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
         editKapasitas.setText(Integer.toString(ruangan.getKapasitas()));
 
         btnSimpan.setOnClickListener(view -> {
+            ruangan.setNama(editNamaRuang.getText().toString());
+            ruangan.setKapasitas(Integer.parseInt(editKapasitas.getText().toString()));
+            ruangan.setKodeGedung(spinner.getSelectedItem().toString().split(" - ")[0]);
             AsyncTask.execute(() -> {
-                ruangan.setNama(editNamaRuang.getText().toString());
-                ruangan.setKapasitas(Integer.parseInt(editKapasitas.getText().toString()));
-                ruangan.setKodeGedung(editKodeRuang.getText().toString());
                 db.ruanganDAO().update(ruangan);
-                ((MainActivity) context).runOnUiThread(() -> {
-                    notifyDataSetChanged();
-                    Toast.makeText(context, "Ruangan berhasil diubah", Toast.LENGTH_SHORT).show();
-                });
             });
+            notifyDataSetChanged();
+            Toast.makeText(context, "Ruangan berhasil diubah", Toast.LENGTH_SHORT).show();
             dialog.dismiss();
         });
 
@@ -109,5 +112,28 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
         dialogBuilder.setView(formPopupView);
         dialog = dialogBuilder.create();
         dialog.show();
+    }
+
+    private void getListGedung(String kodeGedung) {
+        AsyncTask.execute(new Runnable() {
+            List<String> allGedung = new ArrayList<>();
+            @Override
+            public void run() {
+                List<Gedung> listGedung = db.gedungDAO().getAll();
+                if(listGedung.size() > 0) {
+                    int index = 0;
+                    for (Gedung gedung : listGedung) {
+                        if(gedung.getKodeGedung().equals(kodeGedung)) {
+                            index = listGedung.indexOf(gedung);
+                        }
+                        allGedung.add(gedung.getKodeGedung() + " - " + gedung.getNamaGedung());
+                    }
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, allGedung);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(adapter);
+                    spinner.setSelection(index);
+                }
+            }
+        });
     }
 }
