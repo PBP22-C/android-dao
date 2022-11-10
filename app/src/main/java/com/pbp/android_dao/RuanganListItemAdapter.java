@@ -3,7 +3,6 @@ package com.pbp.android_dao;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,14 +47,14 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
         // Lookup view for data population
         TextView tvNamaRuangan = (TextView) convertView.findViewById(R.id.itemNamaRuangan);
         TextView tvKapasitas = (TextView) convertView.findViewById(R.id.itemKapasitas);
-        TextView tvKodeGedung = (TextView) convertView.findViewById(R.id.itemKodeGedung);
+        TextView tvNamaGedung = (TextView) convertView.findViewById(R.id.itemNamaGedung);
         Button btnUbah = (Button) convertView.findViewById(R.id.btnUbah);
         Button btnHapus = (Button) convertView.findViewById(R.id.btnHapus);
 
         // Populate the data into the template view using the data object
         tvNamaRuangan.setText(ruangan.getNama());
         tvKapasitas.setText("Kapasitas: " + Integer.toString(ruangan.getKapasitas()));
-        tvKodeGedung.setText(ruangan.getKodeGedung());
+        tvNamaGedung.setText(db.gedungDAO().findNamaGedungByKode(ruangan.getKodeGedung()));
 
         btnUbah.setOnClickListener(view -> {
             showFormUbahRuangan(view, ruangan);
