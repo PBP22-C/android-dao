@@ -77,7 +77,7 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
     }
 //    private void showFormUbahRuangan(Ruangan ruangan){
     private void showFormUbahRuangan(View v, Ruangan ruangan){
-        dialogBuilder = new AlertDialog.Builder(v.getRootView().getContext());
+        dialogBuilder = new AlertDialog.Builder(context);
         final View formPopupView = LayoutInflater.from(getContext()).inflate(R.layout.edit_ruangan_modal, null);
         EditText editKodeRuang = (EditText) formPopupView.findViewById(R.id.editKodeRuang);
         editKodeRuang.setText(ruangan.getKodeRuangan());
@@ -95,7 +95,6 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
                 ruangan.setKapasitas(Integer.parseInt(editKapasitas.getText().toString()));
                 ruangan.setKodeGedung(editKodeRuang.getText().toString());
                 db.ruanganDAO().update(ruangan);
-                // Error disini cuy
                 ((MainActivity) context).runOnUiThread(() -> {
                     notifyDataSetChanged();
                     Toast.makeText(context, "Ruangan berhasil diubah", Toast.LENGTH_SHORT).show();

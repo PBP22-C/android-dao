@@ -15,10 +15,11 @@ public class Ruangan {
     private int kapasitas;
     private String kodeGedung;
 
-    public Ruangan(String kodeRuangan, String nama, int kapasitas) {
+    public Ruangan(String kodeRuangan, String nama, int kapasitas, String kodeGedung) {
         this.kodeRuangan = kodeRuangan;
         this.nama = nama;
         this.kapasitas = kapasitas;
+        this.kodeGedung = kodeGedung;
     }
 
     public String getKodeRuangan() {

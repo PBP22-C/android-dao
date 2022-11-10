@@ -100,6 +100,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setDaftarRuangBySpinnerSelect(String kodeGedung) {
+        System.out.println("Testing");
         AsyncTask.execute(new Runnable() {
             List<GedungWithRuangans> gedungWithRuangans;
             ArrayList<Ruangan> ruangans = new ArrayList<>();
@@ -124,7 +125,7 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void run() {
                             ListView daftarRuangView = (ListView) getView().findViewById(R.id.daftarRuangLayout);
-                            RuanganListItemAdapter adapter = new RuanganListItemAdapter(ruangans, getActivity().getApplicationContext(), db);
+                            RuanganListItemAdapter adapter = new RuanganListItemAdapter(ruangans, getContext(), db);
                             daftarRuangView.setAdapter(adapter);
                         }
                     });

@@ -158,7 +158,7 @@ public class FormFragment extends Fragment {
                             });
                             return;
                         }
-                        db.ruanganDAO().insertOne(kodeRuang, namaRuang, Integer.parseInt(kapasitas), kodeGedung);
+                        db.ruanganDAO().insertOne(new Ruangan(kodeRuang, namaRuang, Integer.parseInt(kapasitas), kodeGedung));
                         Log.i("RUANGAN", "BERHASIL");
 
                         getActivity().runOnUiThread(new Runnable() {

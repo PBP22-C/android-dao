@@ -25,8 +25,11 @@ public interface RuanganDAO {
     @Insert
     void insertAll(Ruangan... ruangans);
 
-    @Query("INSERT INTO ruangan (kodeRuangan, nama, kapasitas, kodeGedung) VALUES (:kodeRuangan, :nama,:kapasitas, :kodeGedung)")
-    void insertOne(String kodeRuangan, String nama, int kapasitas, String kodeGedung);
+    @Insert
+    void insertOne(Ruangan ruangan);
+
+//    @Query("INSERT INTO ruangan (kodeRuangan, nama, kapasitas, kodeGedung) VALUES (:kodeRuangan, :nama,:kapasitas, :kodeGedung)")
+//    void insertOne(String kodeRuangan, String nama, int kapasitas, String kodeGedung);
 
     @Update
     void update(Ruangan ruangan);
