@@ -15,4 +15,6 @@
     <string name="ubah_data">Ubah Data</string>
     <string name="batal">Batal</string>
     <string name="daftar_ruang">Daftar Ruang</string>
+    <string name="ubah">Ubah</string>
+    <string name="hapus">Hapus</string>
 </resources>
