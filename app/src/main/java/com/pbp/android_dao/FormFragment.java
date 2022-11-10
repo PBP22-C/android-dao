@@ -1,5 +1,7 @@
 package com.pbp.android_dao;
 
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -60,6 +62,9 @@ public class FormFragment extends Fragment {
         btnTambahGedung.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                set button text style bold
+                btnTambahGedung.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+                btnTambahRuangan.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
                 createFormTambahGedung();
             }
         });
@@ -67,6 +72,8 @@ public class FormFragment extends Fragment {
         btnTambahRuangan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                btnTambahGedung.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+                btnTambahRuangan.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
                 createFormTambahRuang();
             }
         });
