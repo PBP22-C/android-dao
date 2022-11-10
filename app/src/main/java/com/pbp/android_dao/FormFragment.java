@@ -1,14 +1,8 @@
 package com.pbp.android_dao;
 
-import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,13 +14,16 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.pbp.android_dao.entity.AppDatabase;
 import com.pbp.android_dao.entity.Gedung;
 import com.pbp.android_dao.entity.Ruangan;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FormFragment extends Fragment {
     private Button btnTambahGedung, btnTambahRuangan;
@@ -91,7 +88,7 @@ public class FormFragment extends Fragment {
             public void onClick(View view) {
                 String namaGedung = etNamaGedung.getText().toString().trim();
                 String kodeGedung = etKodeGedung.getText().toString().trim();
-                Gedung gedung = new Gedung(namaGedung, kodeGedung);
+                Gedung gedung = new Gedung(kodeGedung, namaGedung);
                 if(namaGedung.isEmpty() || kodeGedung.isEmpty()) {
                     Toast.makeText(getActivity().getApplicationContext(), "Data tidak boleh kosong", Toast.LENGTH_SHORT).show();
                     return;

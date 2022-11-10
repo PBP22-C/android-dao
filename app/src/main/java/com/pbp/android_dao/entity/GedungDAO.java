@@ -27,6 +27,9 @@ public interface GedungDAO {
     @Query("SELECT * FROM gedung WHERE namaGedung LIKE :nama LIMIT 1")
     Gedung findByName(String nama);
 
+    @Query("SELECT namaGedung FROM gedung WHERE kodeGedung LIKE :kodeGedung")
+    String findNamaGedungByKode(String kodeGedung);
+
     @Insert
     void insertAll(Gedung... gedungs);
 
