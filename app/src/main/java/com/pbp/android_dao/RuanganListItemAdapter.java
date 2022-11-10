@@ -65,11 +65,9 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
                 AsyncTask.execute(() -> {
                     db.ruanganDAO().delete(ruangan);
                     ruangans.remove(ruangan);
-                    ((MainActivity) context).runOnUiThread(() -> {
-                        notifyDataSetChanged();
-                        Toast.makeText(context, "Ruangan berhasil dihapus", Toast.LENGTH_SHORT).show();
-                    });
                 });
+                notifyDataSetChanged();
+                Toast.makeText(context, "Ruangan berhasil dihapus", Toast.LENGTH_SHORT).show();
             }
         });
 
