@@ -52,9 +52,9 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
         Button btnHapus = (Button) convertView.findViewById(R.id.btnHapus);
 
         // Populate the data into the template view using the data object
-        tvNamaRuangan.setText(ruangan.getNama());
+        tvNamaRuangan.setText(ruangan.getKodeRuangan() + " - " + ruangan.getNama());
         tvKapasitas.setText("Kapasitas: " + Integer.toString(ruangan.getKapasitas()));
-        tvNamaGedung.setText(db.gedungDAO().findNamaGedungByKode(ruangan.getKodeGedung()));
+        tvNamaGedung.setText("Gedung: " + db.gedungDAO().findNamaGedungByKode(ruangan.getKodeGedung()));
 
         btnUbah.setOnClickListener(view -> {
             showFormUbahRuangan(view, ruangan);
