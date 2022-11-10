@@ -14,11 +14,11 @@ public class Gedung {
     @PrimaryKey
     @NonNull
     private String kodeGedung;
-    private String nama;
+    private String namaGedung;
 
-    public Gedung(String kodeGedung, String nama) {
+    public Gedung(String kodeGedung, String namaGedung) {
         this.kodeGedung = kodeGedung;
-        this.nama = nama;
+        this.namaGedung = namaGedung;
     }
 
     public String getKodeGedung() {
@@ -29,16 +29,16 @@ public class Gedung {
         this.kodeGedung = kodeGedung;
     }
 
-    public String getNama() {
-        return nama;
+    public String getNamaGedung() {
+        return namaGedung;
     }
 
-    public void setNama(String nama) {
-        this.nama = nama;
+    public void setNamaGedung(String nama) {
+        this.namaGedung = nama;
     }
 
     @Override
     public String toString() {
-        return nama + (kodeGedung != "" ? " - " + kodeGedung : "");
+        return namaGedung;
     }
 }

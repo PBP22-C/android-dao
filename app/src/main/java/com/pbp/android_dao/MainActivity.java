@@ -25,24 +25,25 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
     ActivityMainBinding binding;
+    AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        db = AppDatabase.getInstance(getApplicationContext());
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new HomeFragment());
+        replaceFragment(new HomeFragment(db));
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.home:
-                    replaceFragment(new HomeFragment());
+                    replaceFragment(new HomeFragment(db));
                     binding.bottomNavigationView.getMenu().findItem(R.id.home).setChecked(true);
                     break;
                 case R.id.form:
-                    replaceFragment(new FormFragment());
+                    replaceFragment(new FormFragment(db));
                     binding.bottomNavigationView.getMenu().findItem(R.id.form).setChecked(true);
                     break;
             }

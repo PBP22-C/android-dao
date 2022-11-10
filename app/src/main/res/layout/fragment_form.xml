@@ -6,22 +6,21 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".FormFragment">
-
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        >
             <Button
-                android:id="@+id/tambahGedungForm"
+                android:id="@+id/btnTambahGedung"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tambahGedung"
                 style="?android:attr/buttonBarButtonStyle"/>
             <Button
                 style="?android:attr/buttonBarButtonStyle"
-                android:id="@+id/tambahRuanganForm"
+                android:id="@+id/btnTambahRuangan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tambahRuangan"
@@ -30,43 +29,11 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-            <EditText
-                android:id="@+id/namaGedung"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@string/nama_gedung" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-            <EditText
-                android:id="@+id/kodeGedung"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@string/kode_gedung"
-                />
-</LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/insertGedungButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/insert"
-                 />
-
-
-
-
-
+        android:orientation="vertical"
+        android:id="@+id/layoutForm"
+        android:layout_gravity="center_horizontal"
+        >
     </LinearLayout>
-
-
 </LinearLayout>
+
