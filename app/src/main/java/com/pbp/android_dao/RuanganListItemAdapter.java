@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,7 +56,7 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
 
         btnUbah.setOnClickListener(view -> {
 //            showFormUbahRuangan(ruangan);
-            showFormUbahRuangan();
+            showFormUbahRuangan(view, ruangan);
 //                Toast.makeText(context, ruangan.getNama(), Toast.LENGTH_SHORT).show();
         });
 
@@ -75,9 +76,9 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
         return convertView;
     }
 //    private void showFormUbahRuangan(Ruangan ruangan){
-    private void showFormUbahRuangan(){
-        dialogBuilder = new AlertDialog.Builder(context);
-        final View formPopupView = LayoutInflater.from(context).inflate(R.layout.edit_ruangan_modal, null);
+    private void showFormUbahRuangan(View view, Ruangan ruangan){
+        dialogBuilder = new AlertDialog.Builder(view.getRootView().getContext());
+        final View formPopupView = LayoutInflater.from(getContext()).inflate(R.layout.edit_ruangan_modal, null);
 //        EditText editKodeRuang = (EditText) formPopupView.findViewById(R.id.editKodeRuang);
 //        editKodeRuang.setText(ruangan.getKodeRuangan());
 //        EditText editNamaRuang = (EditText) formPopupView.findViewById(R.id.editNamaRuang);
