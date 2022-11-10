@@ -17,18 +17,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="9dp"
+        android:layout_marginTop="0dp"
         android:text="@string/pilih_gedung"
         android:textSize="20sp"
         android:id="@+id/tvPilihGedung"
         android:textStyle="bold" />
 
     <Spinner
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/tvPilihGedung"
         android:id="@+id/spinnerGedung"
-        android:layout_marginStart="10dp"
-        android:backgroundTint="@color/green_700"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/rounded_corner_green"
+        android:backgroundTint="@color/green_100"
         app:layout_constraintStart_toStartOf="@+id/tvPilihGedung"
         android:prompt="@string/pilih_gedung"
         />
