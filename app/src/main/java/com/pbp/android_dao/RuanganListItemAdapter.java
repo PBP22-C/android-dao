@@ -54,13 +54,11 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
 
         // Populate the data into the template view using the data object
         tvNamaRuangan.setText(ruangan.getNama());
-        tvKapasitas.setText(Integer.toString(ruangan.getKapasitas()));
+        tvKapasitas.setText("Kapasitas: " + Integer.toString(ruangan.getKapasitas()));
         tvKodeGedung.setText(ruangan.getKodeGedung());
 
         btnUbah.setOnClickListener(view -> {
-//            showFormUbahRuangan(ruangan);
             showFormUbahRuangan(view, ruangan);
-//                Toast.makeText(context, ruangan.getNama(), Toast.LENGTH_SHORT).show();
         });
 
         btnHapus.setOnClickListener(new View.OnClickListener() {
@@ -78,20 +76,23 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
         // Return the completed view to render on screen
         return convertView;
     }
-//    private void showFormUbahRuangan(Ruangan ruangan){
+
     private void showFormUbahRuangan(View v, Ruangan ruangan){
         dialogBuilder = new AlertDialog.Builder(context);
         final View formPopupView = LayoutInflater.from(getContext()).inflate(R.layout.edit_ruangan_modal, null);
         EditText editKodeRuang = (EditText) formPopupView.findViewById(R.id.editKodeRuang);
-        editKodeRuang.setText(ruangan.getKodeRuangan());
         EditText editNamaRuang = (EditText) formPopupView.findViewById(R.id.editNamaRuang);
-        editNamaRuang.setText(ruangan.getNama());
         EditText editKapasitas = (EditText) formPopupView.findViewById(R.id.editKapasitas);
-        editKapasitas.setText(Integer.toString(ruangan.getKapasitas()));
         spinner = (Spinner) formPopupView.findViewById(R.id.spinnerEditRuang);
         getListGedung(ruangan.getKodeGedung());
 
         Button btnSimpan = (Button) formPopupView.findViewById(R.id.btnUbahData);
+        Button btnBatal = (Button) formPopupView.findViewById(R.id.btnBatal);
+
+        editKodeRuang.setText(ruangan.getKodeRuangan());
+        editNamaRuang.setText(ruangan.getNama());
+        editKapasitas.setText(Integer.toString(ruangan.getKapasitas()));
+
         btnSimpan.setOnClickListener(view -> {
             ruangan.setNama(editNamaRuang.getText().toString());
             ruangan.setKapasitas(Integer.parseInt(editKapasitas.getText().toString()));
@@ -104,7 +105,6 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
             dialog.dismiss();
         });
 
-        Button btnBatal = (Button) formPopupView.findViewById(R.id.btnBatal);
         btnBatal.setOnClickListener(view -> {
             dialog.dismiss();
         });

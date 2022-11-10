@@ -2,26 +2,18 @@ package com.pbp.android_dao;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.UiThread;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.room.Room;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TableLayout;
-import android.widget.TextView;
 
-import com.google.android.material.navigation.NavigationBarView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.pbp.android_dao.entity.AppDatabase;
 import com.pbp.android_dao.entity.Gedung;
 import com.pbp.android_dao.entity.GedungWithRuangans;
@@ -121,24 +113,10 @@ public class HomeFragment extends Fragment {
                 }
 
                 // Insert ruangan to daftar ruang view
-                if (!ruangans.isEmpty()) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ListView daftarRuangView = (ListView) getView().findViewById(R.id.daftarRuangLayout);
-                            RuanganListItemAdapter adapter = new RuanganListItemAdapter(ruangans, getContext(), db);
-                            daftarRuangView.setAdapter(adapter);
-                        }
-                    });
-                }else{
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ListView daftarRuangView = (ListView) getView().findViewById(R.id.daftarRuangLayout);
-                            daftarRuangView.setAdapter(null);
-                        }
-                    });
-                }
+
+                ListView daftarRuangView = (ListView) getView().findViewById(R.id.daftarRuangLayout);
+                RuanganListItemAdapter adapter = new RuanganListItemAdapter(ruangans, getContext(), db);
+                daftarRuangView.setAdapter(adapter);
 
 //                // Debug purpose
 //                for (Ruangan x : ruangans) {
