@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -69,25 +70,35 @@ public class HomeFragment extends Fragment {
             List<Gedung> allGedung;
             @Override
             public void run() {
-                // Get gedung data from DB
-                allGedung = db.gedungDAO().getAll();
-                // Default option
-                allGedung.add(0, new Gedung("All", "Semua Gedung"));
+                try {
+                    // Get gedung data from DB
+                    allGedung = db.gedungDAO().getAll();
+                    // Default option
+                    allGedung.add(0, new Gedung("All", "Semua Gedung"));
 
-                // Create spinner with all available gedung
-                // Create an ArrayAdapter using the string array and a default spinner layout
-                ArrayAdapter<Gedung> adapter = new ArrayAdapter<Gedung>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, allGedung);
+                    // Create spinner with all available gedung
+                    // Create an ArrayAdapter using the string array and a default spinner layout
+                    ArrayAdapter<Gedung> adapter = new ArrayAdapter<Gedung>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, allGedung);
 
-                // Specify the layout to use when the list of choices appears
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    // Specify the layout to use when the list of choices appears
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-                // Apply the adapter to the spinner
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        spinner.setAdapter(adapter);
-                    }
-                });
+                    // Apply the adapter to the spinner
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            spinner.setAdapter(adapter);
+                        }
+                    });
+                }catch (Exception e) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity().getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -99,30 +110,39 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void run() {
-                // Fetch ruangan from db
-                if (kodeGedung.equals("All")) {
-                    gedungWithRuangans = db.gedungDAO().getAllGedungWithRuangan();
-                } else {
-                    gedungWithRuangans = db.gedungDAO().getGedungWithRuangan(kodeGedung);
-                }
-
-                // Append every ruangan to ArrayList<Ruangan>
-                for (GedungWithRuangans gedung : gedungWithRuangans) {
-                    ruangans.addAll(gedung.ruangans);
-                }
-
-                // Insert ruangan to daftar ruang view
-
-                ListView daftarRuangView = (ListView) getView().findViewById(R.id.daftarRuangLayout);
-                RuanganListItemAdapter adapter = new RuanganListItemAdapter(ruangans, getContext(), db);
-//                add uithread
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        daftarRuangView.setAdapter(adapter);
+                try{
+                    // Fetch ruangan from db
+                    if (kodeGedung.equals("All")) {
+                        gedungWithRuangans = db.gedungDAO().getAllGedungWithRuangan();
+                    } else {
+                        gedungWithRuangans = db.gedungDAO().getGedungWithRuangan(kodeGedung);
                     }
-                });
 
+                    // Append every ruangan to ArrayList<Ruangan>
+                    for (GedungWithRuangans gedung : gedungWithRuangans) {
+                        ruangans.addAll(gedung.ruangans);
+                    }
+
+                    // Insert ruangan to daftar ruang view
+
+                    ListView daftarRuangView = (ListView) getView().findViewById(R.id.daftarRuangLayout);
+                    RuanganListItemAdapter adapter = new RuanganListItemAdapter(ruangans, getContext(), db);
+//                add uithread
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            daftarRuangView.setAdapter(adapter);
+                        }
+                    });
+                }catch (Exception e) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity().getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    e.printStackTrace();
+                }
             }
         });
     }

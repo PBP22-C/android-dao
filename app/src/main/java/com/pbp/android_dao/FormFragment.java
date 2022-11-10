@@ -96,28 +96,30 @@ public class FormFragment extends Fragment {
                 AsyncTask.execute(new Runnable() {
                     @Override
                     public void run() {
-                        List<Gedung> listGedung = db.gedungDAO().getGedungByKode(kodeGedung);
-                        System.out.println(listGedung.isEmpty());
-                        if(listGedung.size() > 0) {
+                        try {
+                            db.gedungDAO().insertOne(gedung.getKodeGedung(), gedung.getNamaGedung());
+                            Log.i("GEDUNG", "BERHASIL");
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getActivity().getApplicationContext(), "Kode Gedung sudah ada", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity().getApplicationContext(), "Berhasil menambahkan gedung", Toast.LENGTH_SHORT).show();
+                                    etNamaGedung.setText("");
+                                    etKodeGedung.setText("");
                                 }
                             });
-                            return;
+                        } catch (Exception e) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if(e.toString().matches(".*SQLITE_CONSTRAINT.*")) {
+                                        Toast.makeText(getActivity().getApplicationContext(), "Kode gedung sudah ada", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(getActivity().getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                            e.printStackTrace();
                         }
-                        db.gedungDAO().insertOne(gedung.getKodeGedung(), gedung.getNamaGedung());
-                        Log.i("GEDUNG", "BERHASIL");
-
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getContext(), "Gedung berhasil ditambahkan", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        etKodeGedung.setText("");
-                        etNamaGedung.setText("");
                     }
                 });
             }
@@ -141,10 +143,6 @@ public class FormFragment extends Fragment {
                 String namaRuang = etNamaRuang.getText().toString();
                 String kodeRuang = etKodeRuang.getText().toString();
                 String kapasitas = etKapasitas.getText().toString();
-                if (spinner.getSelectedItem() == null) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Belum ada gedung yang valid, silahkan masukkan data gedung terlebih dahulu", Toast.LENGTH_SHORT).show();
-                    return;
-                }
                 String kodeGedung = spinner.getSelectedItem().toString().split(" - ")[0];
 
                 Log.i("RUANGAN", kodeGedung);
@@ -155,28 +153,32 @@ public class FormFragment extends Fragment {
                 AsyncTask.execute(new Runnable() {
                     @Override
                     public void run() {
-                        List<Ruangan> listRuangan = db.ruanganDAO().findByKode(kodeRuang);
-                        if(listRuangan.size() > 0) {
+                        try {
+                            db.ruanganDAO().insertOne(new Ruangan(kodeRuang, namaRuang, Integer.parseInt(kapasitas), kodeGedung));
+                            Log.i("RUANGAN", "BERHASIL");
+
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getActivity().getApplicationContext(), "Kode Ruangan sudah ada", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity().getApplicationContext(), "Ruangan berhasil ditambahkan", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                            return;
+                            etKodeRuang.setText("");
+                            etNamaRuang.setText("");
+                            etKapasitas.setText("");
+                        } catch (Exception e) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if(e.toString().matches(".*SQLITE_CONSTRAINT.*")) {
+                                        Toast.makeText(getActivity().getApplicationContext(), "Kode Ruangan sudah ada", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(getActivity().getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                            e.printStackTrace();
                         }
-                        db.ruanganDAO().insertOne(new Ruangan(kodeRuang, namaRuang, Integer.parseInt(kapasitas), kodeGedung));
-                        Log.i("RUANGAN", "BERHASIL");
-
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getActivity().getApplicationContext(), "Ruangan berhasil ditambahkan", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        etKodeRuang.setText("");
-                        etNamaRuang.setText("");
-                        etKapasitas.setText("");
                     }
                 });
             }
@@ -188,27 +190,37 @@ public class FormFragment extends Fragment {
             List<String> allGedung = new ArrayList<>();
             @Override
             public void run() {
-                List<Gedung> listGedung = db.gedungDAO().getAll();
-                if(listGedung.size() > 0) {
-                    for (Gedung gedung : listGedung) {
-                        allGedung.add(gedung.getKodeGedung() + " - " + gedung.getNamaGedung());
-                    }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, allGedung);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                try {
+                    List<Gedung> listGedung = db.gedungDAO().getAll();
+                    if(listGedung.size() > 0) {
+                        for (Gedung gedung : listGedung) {
+                            allGedung.add(gedung.getKodeGedung() + " - " + gedung.getNamaGedung());
+                        }
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, allGedung);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                spinner.setAdapter(adapter);
+                            }
+                        });
+                    }else{
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getActivity().getApplicationContext(), "Data Gedung Kosong", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }catch (Exception e) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            spinner.setAdapter(adapter);
+                            Toast.makeText(getActivity().getApplicationContext(), "Gagal menambahkan ruangan", Toast.LENGTH_SHORT).show();
                         }
                     });
-                }else{
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getActivity().getApplicationContext(), "Data Gedung Kosong", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    e.printStackTrace();
                 }
             }
         });

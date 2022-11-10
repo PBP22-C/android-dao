@@ -63,10 +63,8 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
         btnHapus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AsyncTask.execute(() -> {
-                    db.ruanganDAO().delete(ruangan);
-                    ruangans.remove(ruangan);
-                });
+                db.ruanganDAO().delete(ruangan);
+                ruangans.remove(ruangan);
                 notifyDataSetChanged();
                 Toast.makeText(context, "Ruangan berhasil dihapus", Toast.LENGTH_SHORT).show();
             }
@@ -106,29 +104,39 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
             ruangan.setKodeGedung(spinner.getSelectedItem().toString().split(" - ")[0]);
 
             AsyncTask.execute(() -> {
-                if (!ruangan.getKodeRuangan().equals(kodeRuang)) {
-                    List<Ruangan> findRuanganWithKodeRuang = db.ruanganDAO().findByKode(kodeRuang);
-                    if (findRuanganWithKodeRuang.size() > 0) {
-                        ((MainActivity) context).runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(context, "Kode ruang sudah ada", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        return;
+                try{
+                    if (!ruangan.getKodeRuangan().equals(kodeRuang)) {
+                        List<Ruangan> findRuanganWithKodeRuang = db.ruanganDAO().findByKode(kodeRuang);
+                        if (findRuanganWithKodeRuang.size() > 0) {
+                            ((MainActivity) context).runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(context, "Kode ruang sudah ada", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            return;
+                        }
                     }
-                }
-                ruangan.setKodeRuangan(kodeRuang);
-                db.ruanganDAO().update(ruangan);
+                    ruangan.setKodeRuangan(kodeRuang);
+                    db.ruanganDAO().update(ruangan);
 
-                ((MainActivity) context).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        notifyDataSetChanged();
-                        Toast.makeText(context, "Ruangan berhasil diubah", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                    }
-                });
+                    ((MainActivity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            notifyDataSetChanged();
+                            Toast.makeText(context, "Ruangan berhasil diubah", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+                        }
+                    });
+                }catch (Exception e) {
+                    ((MainActivity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context.getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    e.printStackTrace();
+                }
             });
         });
 
@@ -146,19 +154,29 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
             List<String> allGedung = new ArrayList<>();
             @Override
             public void run() {
-                List<Gedung> listGedung = db.gedungDAO().getAll();
-                if(listGedung.size() > 0) {
-                    int index = 0;
-                    for (Gedung gedung : listGedung) {
-                        if(gedung.getKodeGedung().equals(kodeGedung)) {
-                            index = listGedung.indexOf(gedung);
+                try{
+                    List<Gedung> listGedung = db.gedungDAO().getAll();
+                    if(listGedung.size() > 0) {
+                        int index = 0;
+                        for (Gedung gedung : listGedung) {
+                            if(gedung.getKodeGedung().equals(kodeGedung)) {
+                                index = listGedung.indexOf(gedung);
+                            }
+                            allGedung.add(gedung.getKodeGedung() + " - " + gedung.getNamaGedung());
                         }
-                        allGedung.add(gedung.getKodeGedung() + " - " + gedung.getNamaGedung());
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, allGedung);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinner.setAdapter(adapter);
+                        spinner.setSelection(index);
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, allGedung);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner.setAdapter(adapter);
-                    spinner.setSelection(index);
+                }catch (Exception e) {
+                    ((MainActivity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context.getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    e.printStackTrace();
                 }
             }
         });
