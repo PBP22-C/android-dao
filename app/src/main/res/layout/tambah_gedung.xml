@@ -9,35 +9,56 @@
 
     <EditText
         android:id="@+id/namaGedung"
-        android:layout_width="316dp"
-        android:layout_height="43dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_corner"
+        android:backgroundTint="@color/grey_200"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="@string/nama_gedung"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+
+        app:layout_constraintBottom_toTopOf="@+id/insertGedungButton"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kodeGedung" />
+    />
 
     <EditText
         android:id="@+id/kodeGedung"
-        android:layout_width="317dp"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/rounded_corner"
         android:ems="10"
+        android:padding="10dp"
+        android:backgroundTint="@color/grey_200"
         android:inputType="textPersonName"
         android:hint="@string/kode_gedung"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/namaGedung" />
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/insertGedungButton"
-        android:layout_width="319dp"
-        android:layout_height="47dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/rounded_corner"
         android:text="@string/insert"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/kodeGedung" />
+        app:layout_constraintTop_toBottomOf="@+id/namaGedung" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
