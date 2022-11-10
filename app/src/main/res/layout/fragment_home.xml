@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="9dp"
-        android:text="Pilih Gedung"
+        android:text="@string/pilih_gedung"
         android:textSize="20sp"
         android:id="@+id/tvPilihGedung"
         android:textStyle="bold"
@@ -23,6 +23,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvPilihGedung"
         android:id="@+id/spinnerGedung"
         android:layout_marginTop="8dp"
+        android:backgroundTint="@color/green_700"
         app:layout_constraintStart_toStartOf="@+id/tvPilihGedung"
         android:prompt="@string/pilih_gedung"
         />
