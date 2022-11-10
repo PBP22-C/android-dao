@@ -120,7 +120,7 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void run() {
                             ListView daftarRuangView = (ListView) getView().findViewById(R.id.daftarRuangLayout);
-                            RuanganListItemAdapter adapter = new RuanganListItemAdapter(ruangans, getActivity().getApplicationContext());
+                            RuanganListItemAdapter adapter = new RuanganListItemAdapter(ruangans, getActivity().getApplicationContext(), db);
                             daftarRuangView.setAdapter(adapter);
                         }
                     });

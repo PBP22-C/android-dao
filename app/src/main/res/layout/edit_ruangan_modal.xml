@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:padding="10dp">
+    android:padding="10dp"
+    >
 
     <TextView
         android:id="@+id/tvUbahData"
@@ -21,12 +22,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editNamaRuang"
+        android:id="@+id/editKodeRuang"
         android:layout_width="317dp"
         android:layout_height="47dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="@string/nama_ruang"
+        android:hint="@string/kode_ruang"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,16 +35,16 @@
 
 
     <EditText
-        android:id="@+id/editKodeRuang"
+        android:id="@+id/editNamaRuang"
         android:layout_width="317dp"
         android:layout_height="50dp"
         android:ems="10"
         android:inputType="textShortMessage"
-        android:hint="@string/kode_ruang"
+        android:hint="@string/nama_ruang"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editNamaRuang" />
+        app:layout_constraintTop_toBottomOf="@+id/editKodeRuang" />
 
     <EditText
         android:id="@+id/editKapasitas"
@@ -55,7 +56,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editKodeRuang" />
+        app:layout_constraintTop_toBottomOf="@+id/editNamaRuang" />
 
     <Spinner
         android:layout_width="wrap_content"
