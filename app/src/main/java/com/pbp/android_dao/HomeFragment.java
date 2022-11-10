@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TableLayout;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationBarView;
 import com.pbp.android_dao.entity.AppDatabase;
@@ -127,6 +128,14 @@ public class HomeFragment extends Fragment {
                             ListView daftarRuangView = (ListView) getView().findViewById(R.id.daftarRuangLayout);
                             RuanganListItemAdapter adapter = new RuanganListItemAdapter(ruangans, getContext(), db);
                             daftarRuangView.setAdapter(adapter);
+                        }
+                    });
+                }else{
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ListView daftarRuangView = (ListView) getView().findViewById(R.id.daftarRuangLayout);
+                            daftarRuangView.setAdapter(null);
                         }
                     });
                 }

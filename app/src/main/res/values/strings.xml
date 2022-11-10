@@ -14,4 +14,5 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ubah_data">Ubah Data</string>
     <string name="batal">Batal</string>
+    <string name="daftar_ruang">Daftar Ruang</string>
 </resources>
