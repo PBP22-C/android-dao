@@ -93,7 +93,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void setDaftarRuangBySpinnerSelect(String kodeGedung) {
-        System.out.println("Testing");
         AsyncTask.execute(new Runnable() {
             List<GedungWithRuangans> gedungWithRuangans;
             ArrayList<Ruangan> ruangans = new ArrayList<>();
