@@ -63,10 +63,7 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
         btnHapus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                db.ruanganDAO().delete(ruangan);
-                ruangans.remove(ruangan);
-                notifyDataSetChanged();
-                Toast.makeText(context, "Ruangan berhasil dihapus", Toast.LENGTH_SHORT).show();
+                deleteRuangan(ruangan);
             }
         });
 
@@ -91,53 +88,7 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
         editKapasitas.setText(Integer.toString(ruangan.getKapasitas()));
 
         btnSimpan.setOnClickListener(view -> {
-            String kodeRuang = editKodeRuang.getText().toString().trim();
-            String namaRuang = editNamaRuang.getText().toString().trim();
-            String kapasitas = editKapasitas.getText().toString().trim();
-
-            if (kodeRuang.isEmpty() || namaRuang.isEmpty() || kapasitas.isEmpty()) {
-                Toast.makeText(context, "Data tidak boleh kosong", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            ruangan.setNama(namaRuang);
-            ruangan.setKapasitas(Integer.parseInt(kapasitas));
-            ruangan.setKodeGedung(spinner.getSelectedItem().toString().split(" - ")[0]);
-
-            AsyncTask.execute(() -> {
-                try{
-                    if (!ruangan.getKodeRuangan().equals(kodeRuang)) {
-                        List<Ruangan> findRuanganWithKodeRuang = db.ruanganDAO().findByKode(kodeRuang);
-                        if (findRuanganWithKodeRuang.size() > 0) {
-                            ((MainActivity) context).runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Toast.makeText(context, "Kode ruang sudah ada", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                            return;
-                        }
-                    }
-                    ruangan.setKodeRuangan(kodeRuang);
-                    db.ruanganDAO().update(ruangan);
-
-                    ((MainActivity) context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            notifyDataSetChanged();
-                            Toast.makeText(context, "Ruangan berhasil diubah", Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
-                        }
-                    });
-                }catch (Exception e) {
-                    ((MainActivity) context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(context.getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    e.printStackTrace();
-                }
-            });
+            updateRuangan(editKodeRuang, editNamaRuang, editKapasitas,ruangan);
         });
 
         btnBatal.setOnClickListener(view -> {
@@ -147,6 +98,80 @@ public class RuanganListItemAdapter extends ArrayAdapter<Ruangan> {
         dialogBuilder.setView(formPopupView);
         dialog = dialogBuilder.create();
         dialog.show();
+    }
+
+    private void deleteRuangan(Ruangan ruangan){
+        AsyncTask.execute(() -> {
+            try{
+                db.ruanganDAO().delete(ruangan);
+                ruangans.remove(ruangan);
+                ((MainActivity) context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        notifyDataSetChanged();
+                        Toast.makeText(context, "Ruangan berhasil dihapus", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }catch (Exception e) {
+                ((MainActivity) context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(context.getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void updateRuangan(EditText editKodeRuang, EditText editNamaRuang,EditText editKapasitas, Ruangan ruangan){
+        String kodeRuang = editKodeRuang.getText().toString().trim();
+        String namaRuang = editNamaRuang.getText().toString().trim();
+        String kapasitas = editKapasitas.getText().toString().trim();
+
+        if (kodeRuang.isEmpty() || namaRuang.isEmpty() || kapasitas.isEmpty()) {
+            Toast.makeText(context, "Data tidak boleh kosong", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        ruangan.setNama(namaRuang);
+        ruangan.setKapasitas(Integer.parseInt(kapasitas));
+        ruangan.setKodeGedung(spinner.getSelectedItem().toString().split(" - ")[0]);
+
+        AsyncTask.execute(() -> {
+            try{
+                if (!ruangan.getKodeRuangan().equals(kodeRuang)) {
+                    List<Ruangan> findRuanganWithKodeRuang = db.ruanganDAO().findByKode(kodeRuang);
+                    if (findRuanganWithKodeRuang.size() > 0) {
+                        ((MainActivity) context).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(context, "Kode ruang sudah ada", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        return;
+                    }
+                }
+                ruangan.setKodeRuangan(kodeRuang);
+                db.ruanganDAO().update(ruangan);
+
+                ((MainActivity) context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        notifyDataSetChanged();
+                        Toast.makeText(context, "Ruangan berhasil diubah", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                });
+            }catch (Exception e) {
+                ((MainActivity) context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(context.getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                e.printStackTrace();
+            }
+        });
     }
 
     private void getListGedung(String kodeGedung) {
